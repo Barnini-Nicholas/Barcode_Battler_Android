@@ -12,12 +12,14 @@ public class Creature {
     private int PA; // Attaque
     private int PB; // Bouclier, pas défense héhé
     private ArrayList<Equipement> listEquipement;
+    private String nom;
 
     public Creature(int pv, int pa, int pb){
         this.setPV(pv);
         this.setPA(pa);
         this.setPB(pb);
         this.setListEquipement(new ArrayList<Equipement>());
+        this.setNom(nom);
     }
 
     public int getPV() {
@@ -50,5 +52,13 @@ public class Creature {
 
     public void setListEquipement(ArrayList<Equipement> listEquipement) {
         this.listEquipement = listEquipement;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }

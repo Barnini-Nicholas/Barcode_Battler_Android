@@ -9,11 +9,13 @@ public class Equipement {
     private int bonusPA;
     private int bonusPV;
     private int bonusPB;
+    private String nom;
 
-    public Equipement(int bonusPA, int bonusPV, int bonusPB) {
+    public Equipement(int bonusPA, int bonusPV, int bonusPB, String nom) {
         this.setBonusPA(bonusPA);
         this.setBonusPV(bonusPV);
         this.setBonusPB(bonusPB);
+        this.setNom(nom);
     }
 
     public int getBonusPA() {
@@ -38,5 +40,13 @@ public class Equipement {
 
     public void setBonusPB(int bonusPB) {
         this.bonusPB = bonusPB;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }
