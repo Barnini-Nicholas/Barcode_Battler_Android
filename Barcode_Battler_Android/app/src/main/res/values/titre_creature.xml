@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="titre_creature_array">
+        <item>Le développeur web</item>
+        <item>L\'oeil de taupe</item>
+        <item>Le bagarreur</item>
+        <item>Le malin</item>
+        <item>Le fourbe</item>
+        <item>L\'unijambiste</item>
+        <item>La folle</item>
+        <item>Le fier</item>
+        <item>Le fou</item>
+        <item>L\'illuminé</item>
+        <item>Le furieux</item>
+        <item>Le brave</item>
+        <item>Le pilote</item>
+        <item>Le footballeur</item>
+        <item>Le fils à papa</item>
+        <item>Le paysan</item>
+    </string-array>
+
+
+</resources>

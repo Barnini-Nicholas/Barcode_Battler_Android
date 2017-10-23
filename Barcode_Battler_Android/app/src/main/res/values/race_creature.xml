@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="race_creature_array">
+        <item>Humain</item>
+        <item>Asari</item>
+        <item>Turien</item>
+        <item>Quarien</item>
+        <item>Krogan</item>
+        <item>Geth</item>
+        <item>Rachni</item>
+        <item>Butarien</item>
+        <item>Angara</item>
+        <item>Galarien</item>
+        <item>Hanari</item>
+        <item>Volus</item>
+        <item>Elcor</item>
+        <item>Vortcha</item>
+        <item>Inconnu</item>
+        <item>Sans culotte</item>
+    </string-array>
+</resources>

@@ -1,5 +1,6 @@
 package com.mbds.barcode_battler_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,6 +40,13 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Log.v("AAAAAA", rawResult.getText()); // Prints scan results
 
         Log.v("BBBBBB", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+
+        String resultat = rawResult.getText().toString();
+
+        Intent intent = new Intent();
+        intent.putExtra("hash", resultat);
+        setResult(1, intent);
+        finish();
 
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nom_creature_array">
+        <item>Karl</item>
+        <item>Nathan</item>
+        <item>Thomas</item>
+        <item>Michel</item>
+        <item>Moun</item>
+        <item>Roger</item>
+        <item>Carlos</item>
+        <item>Pierre</item>
+        <item>Jean Pierre</item>
+        <item>Philippe</item>
+        <item>Ragnar</item>
+        <item>Shepard</item>
+        <item>Barnini</item>
+        <item>Un random</item>
+        <item>Poucave</item>
+        <item>Patrick</item>
+    </string-array>
+
+</resources>
