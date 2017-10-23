@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.google.zxing.Result;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -36,9 +38,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     public void handleResult(Result rawResult) {
         // Do something with the result here
         Log.v("AAAAAA", rawResult.getText()); // Prints scan results
-        Log.v("AAAAAA", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+        Log.v("AAAAAA", DigestUtils.sha1Hex(rawResult.getText().toString()).toString()); // Prints scan results
+        Log.v("BBBBBB", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
         // If you would like to resume scanning, call this method below:
         mScannerView.resumeCameraPreview(this);
     }
+
+
+
 }
