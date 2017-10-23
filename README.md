@@ -20,11 +20,11 @@ Les combats seront au tour par tour, à minima, l’attaquant devra tirer un nom
 
 ## Barème : 
 
-Application fonctionnelle      : 2 points 
-Navigation des écrans propre : 2 points
-Gestion des créatures      : 2 points 
-Scanner un code Barre      : 2 points 
-Serialisation/Deserialisation      : 2 points 
-Combat local fonctionnel      : 2 points 
-Combat réseau fonctionnel     : 2 points
-Bonus implication           : 6 points
+- Application fonctionnelle      : 2 points 
+- Navigation des écrans propre : 2 points
+- Gestion des créatures      : 2 points 
+- Scanner un code Barre      : 2 points 
+- Serialisation/Deserialisation      : 2 points 
+- Combat local fonctionnel      : 2 points 
+- Combat réseau fonctionnel     : 2 points
+- Bonus implication           : 6 points
