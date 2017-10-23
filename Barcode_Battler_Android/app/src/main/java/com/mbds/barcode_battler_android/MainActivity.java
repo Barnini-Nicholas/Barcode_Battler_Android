@@ -27,9 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         generation = new Generation(getApplicationContext());
+        Creature c1 = new Creature(10, 5, 5, "c1");
+        Creature c2 = new Creature(10, 5, 5, "c2");
 
+        new GestionCombat(c1, c2).commencerLaBagarre();
+
+        //new Generation();
         btnScan = (Button) findViewById(R.id.btnScan);
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,12 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         Snackbar mySnackbar = Snackbar.make(findViewById(android.R.id.content), result, LENGTH_LONG);
         mySnackbar.show();
-=======
-        Creature c1 = new Creature(10,5,5,"c1");
-        Creature c2 = new Creature(10,5,5,"c2");
-        new GestionCombat(c1, c2).commencerLaBagarre();
-        //new Generation();
 
->>>>>>> e0200fb8d64088a5a3fac6ea0c3f1912c2c601e1
+
     }
 }
