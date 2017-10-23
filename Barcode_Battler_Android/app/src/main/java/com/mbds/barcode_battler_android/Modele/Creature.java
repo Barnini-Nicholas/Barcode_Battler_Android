@@ -1,6 +1,9 @@
 package com.mbds.barcode_battler_android.Modele;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by barnini on 23/10/2017.
@@ -14,7 +17,7 @@ public class Creature {
     private ArrayList<Equipement> listEquipement;
     private String nom;
 
-    public Creature(int pv, int pa, int pb){
+    public Creature(int pv, int pa, int pb, String nom) {
         this.setPV(pv);
         this.setPA(pa);
         this.setPB(pb);
@@ -60,5 +63,21 @@ public class Creature {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public void attaque(Creature c2) {
+
+        Random rdm = new Random();
+
+        int scoreAttaque = rdm.nextInt(this.getPA() + 1);
+        int scoreDefense = rdm.nextInt(c2.getPB() + 1);
+        int resultat = scoreDefense - scoreAttaque;
+        Log.v("COMBAT", "scoreAttaque : " + scoreAttaque + " // scoreDefense : " + scoreDefense + " // Resultat : " + resultat);
+        if (resultat < 0) {
+            Log.v("COMBAT", "PV au départ : " + c2.getPV());
+            c2.setPV(c2.getPV() - Math.abs(resultat));
+            Log.v("COMBAT", "PV aprés l'attaque : " + c2.getPV());
+        }
+
     }
 }
