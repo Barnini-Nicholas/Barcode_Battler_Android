@@ -4,47 +4,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.zxing.Result;
+import com.mbds.barcode_battler_android.Service.HashService;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
-
-    private ZXingScannerView mScannerView;
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    public void onCreate(Bundle state) {
-        super.onCreate(state);
-        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
-        setContentView(mScannerView);                // Set the scanner view as the content view
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        HashService.hash("3068320055008");
+        HashService.hash("8002270014901");
+        HashService.hash("59060659");
+
+        Log.i("Test", Long.parseLong("c0f52", 16)+"");
+        Log.i("Test", Long.parseLong("7f9cf", 16)+"");
+        Log.i("Test", Long.parseLong("215a1", 16)+"");
+        Log.i("Test", Long.parseLong("b37ec", 16)+"");
+        Log.i("Test", Long.parseLong("af0e0", 16)+"");
+        Log.i("Test", Long.parseLong("90840", 16)+"");
+        Log.i("Test", Long.parseLong("78c3d", 16)+"");
+        Log.i("Test", Long.parseLong("834e3", 16)+"");
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        mScannerView.startCamera();          // Start camera on resume
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();           // Stop camera on pause
-    }
-
-    @Override
-    public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v("AAAAAA", rawResult.getText()); // Prints scan results
-        Log.v("AAAAAA", DigestUtils.sha1Hex(rawResult.getText().toString()).toString()); // Prints scan results
-        Log.v("BBBBBB", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
-
-        // If you would like to resume scanning, call this method below:
-        mScannerView.resumeCameraPreview(this);
-    }
-
-
-
 }
