@@ -2,13 +2,9 @@ package com.mbds.barcode_battler_android.Service;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
-import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.R;
-
-import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 /**
  * Created by Karl on 23/10/2017.
