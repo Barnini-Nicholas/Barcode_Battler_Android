@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class Equipement implements Parcelable {
 
+    private int id;
     private String nom;
     private int bonusPV;
     private int bonusPA;
@@ -89,6 +90,14 @@ public class Equipement implements Parcelable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

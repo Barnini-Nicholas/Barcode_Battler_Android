@@ -36,6 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
         // new GestionCombat(c1, c2).commencerLaBagarre();
 
+        Equipement e1 = new Equipement("aa", 10, 5 ,1);
+        Equipement e2 = new Equipement("bb", 9, 4 ,8);
+        Equipement e3 = new Equipement("cc", 8, 3 ,9);
+        Equipement e4 = new Equipement("dd", 7, 2 ,6);
+        BDD bdd = new BDD( getApplicationContext(), "equipement.db", null, 1);
+        bdd.addEquipement(e1);
+        bdd.addEquipement(e2);
+        bdd.addEquipement(e3);
+        bdd.addEquipement(e4);
+
+        Log.v("BDDDDDDDDDDDDDDDDD", bdd.getEquipement().toString() + " ALLO STP MARCHE");
+
 
         btnScan = (Button) findViewById(R.id.btnScan);
         btnScan.setOnClickListener(new View.OnClickListener() {
