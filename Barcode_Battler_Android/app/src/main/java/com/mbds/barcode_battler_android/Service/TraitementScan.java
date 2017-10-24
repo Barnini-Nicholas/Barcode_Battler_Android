@@ -10,23 +10,23 @@ import com.mbds.barcode_battler_android.R;
  * Created by Karl on 23/10/2017.
  */
 
-public class Generation {
+public class TraitementScan {
 
     private Context context;
 
-    public Generation(Context context) {
+    public TraitementScan(Context context) {
 
         this.context = context;
 
         String valeur = "8002270014901";
     }
 
-    public String generate(String value) {
+    public String traitement(String value) {
 
-        return genererNomTitreEtRace(HashService.hash(value));
+        return traitementNomTitreEtRace(HashService.hash(value));
     }
 
-    private String genererNomTitreEtRace(String hash) {
+    private String traitementNomTitreEtRace(String hash) {
 
         // Hash que l'on souhaite utiliser pour le nom
         String smallHash = hash.substring(0, 3);
