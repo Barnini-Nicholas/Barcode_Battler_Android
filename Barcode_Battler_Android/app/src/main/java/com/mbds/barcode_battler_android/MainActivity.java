@@ -13,7 +13,7 @@ import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.Service.TagLog;
-import com.mbds.barcode_battler_android.Service.TypeButin;
+import com.mbds.barcode_battler_android.Modele.TypeButin;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -2,7 +2,6 @@ package com.mbds.barcode_battler_android;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -12,11 +11,9 @@ import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Service.HashService;
 import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Service.TraitementHash;
-import com.mbds.barcode_battler_android.Service.TypeButin;
+import com.mbds.barcode_battler_android.Modele.TypeButin;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-
-import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {

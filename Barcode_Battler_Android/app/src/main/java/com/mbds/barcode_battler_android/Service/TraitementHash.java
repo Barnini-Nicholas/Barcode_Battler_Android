@@ -1,12 +1,12 @@
 package com.mbds.barcode_battler_android.Service;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
+import com.mbds.barcode_battler_android.Modele.TypeButin;
 import com.mbds.barcode_battler_android.R;
 
 /**
