@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.context = getApplicationContext();
 
 
-        Creature c1 = new Creature(10, 5, 5, "c1");
-        Creature c2 = new Creature(10, 5, 5, "c2");
+        //Creature c1 = new Creature(10, 5, 5, "c1");
+        // Creature c2 = new Creature(10, 5, 5, "c2");
 
-        new GestionCombat(c1, c2).commencerLaBagarre();
+        // new GestionCombat(c1, c2).commencerLaBagarre();
 
 
         btnScan = (Button) findViewById(R.id.btnScan);
@@ -63,30 +63,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Récupération de la valeur du barcode scanné
-        String barcode = data.getStringExtra("barcode");
-
-        // On hash le barcode en SHA1
-        String hash = HashService.hash(barcode);
-
-        // Récupération du type de butin
-        TypeButin typeButin = TraitementHash.getTypeOfHash(hash);
-
-        String result = "";
-
-        switch (typeButin) {
-
-            case CREATURE:
-                result = TraitementHash.getCreature(hash);
-                break;
-
-            case EQUIPEMENT:
-                result = "Not implemented";
-                break;
-        }
-
-        Snackbar mySnackbar = Snackbar.make(findViewById(android.R.id.content), result, LENGTH_LONG);
-        mySnackbar.show();
+        Log.i("OUI", ((Creature) data.getExtras().getParcelable("butin")).toString());
     }
 
     public static Context getAppContext() {

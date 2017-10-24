@@ -2,13 +2,20 @@ package com.mbds.barcode_battler_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.zxing.Result;
+import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Service.HashService;
 import com.mbds.barcode_battler_android.Service.TagLog;
+import com.mbds.barcode_battler_android.Service.TraitementHash;
+import com.mbds.barcode_battler_android.Service.TypeButin;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -44,20 +51,30 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         Log.i(TagLog.SCAN, "Barcode : " + barcode);
         Log.i(TagLog.SCAN, "BarcodeFormat : " + barcodeFormat);
 
+        // On hash le barcode en SHA1
+        String hash = HashService.hash(barcode);
+
+        // Récupération du type de butin
+        TypeButin typeButin = TraitementHash.getTypeOfHash(hash);
+
+
         Intent intent = new Intent();
-        intent.putExtra("barcode", barcode);
+
+        switch (typeButin) {
+
+            case CREATURE:
+                Creature creature = TraitementHash.getCreature(hash);
+                intent.putExtra("butin", creature);
+                break;
+
+            case EQUIPEMENT:
+
+                break;
+        }
+
         setResult(1, intent);
         finish();
 
-
-        // implements Parcelable
-        // writeToParcel(Parcel d, int flag){
-        //  d.writeStringArray([Nom, Prenom, ...]);
-        //}
-
-        //
-        //
-        //
 
     }
 

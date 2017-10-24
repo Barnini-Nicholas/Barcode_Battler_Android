@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.mbds.barcode_battler_android.MainActivity;
+import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.R;
 
 /**
@@ -13,7 +14,9 @@ import com.mbds.barcode_battler_android.R;
 
 public class TraitementHash {
 
-    /** A 1 minimum pour éviter qu'un monstre ait 0 PV */
+    /**
+     * A 1 minimum pour éviter qu'un monstre ait 0 PV
+     */
     private static final int BONUS_PV = 1;
 
     public static TypeButin getTypeOfHash(String value) {
@@ -32,7 +35,7 @@ public class TraitementHash {
         }
     }
 
-    public static String getCreature(String hash) {
+    public static Creature  getCreature(String hash) {
         // *******************************
         // -- TRAITEMENT DU NOM/TITRE/RACE
 
@@ -68,15 +71,15 @@ public class TraitementHash {
         String hashPB = smallHash.substring(2, 3);
 
         // Passage en int
-        int intPV = Integer.parseInt(hashPV, 16) + BONUS_PV;
-        int intPA = Integer.parseInt(hashPA, 16);
-        int intPB = Integer.parseInt(hashPB, 16);
+        int PV = Integer.parseInt(hashPV, 16) + BONUS_PV;
+        int PA = Integer.parseInt(hashPA, 16);
+        int PB = Integer.parseInt(hashPB, 16);
 
-        Log.i(TagLog.HASH, "PV : " + intPV + " (" + hashPV + ")");
-        Log.i(TagLog.HASH, "PA : " + intPA + " (" + hashPA + ")");
-        Log.i(TagLog.HASH, "PB : " + intPB + " (" + hashPB + ")");
+        Log.i(TagLog.HASH, "PV : " + PV + " (" + hashPV + ")");
+        Log.i(TagLog.HASH, "PA : " + PA + " (" + hashPA + ")");
+        Log.i(TagLog.HASH, "PB : " + PB + " (" + hashPB + ")");
 
-        return nom + " - " + titre + " - " + race;
+        return new Creature(nom, titre, race, PV, PA, PB);
     }
 
     public static String getStringResourcesFromArray(int idValue, int arrayId) {
