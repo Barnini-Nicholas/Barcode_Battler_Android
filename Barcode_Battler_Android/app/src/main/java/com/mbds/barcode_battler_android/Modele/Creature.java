@@ -2,6 +2,8 @@ package com.mbds.barcode_battler_android.Modele;
 
 import android.util.Log;
 
+import com.mbds.barcode_battler_android.Service.TagLog;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -72,11 +74,11 @@ public class Creature {
         int scoreAttaque = rdm.nextInt(this.getPA() + 1);
         int scoreDefense = rdm.nextInt(c2.getPB() + 1);
         int resultat = scoreDefense - scoreAttaque;
-        Log.v("COMBAT", "scoreAttaque : " + scoreAttaque + " // scoreDefense : " + scoreDefense + " // Resultat : " + resultat);
+        Log.v(TagLog.COMBAT, "scoreAttaque : " + scoreAttaque + " // scoreDefense : " + scoreDefense + " // Resultat : " + resultat);
         if (resultat < 0) {
-            Log.v("COMBAT", "PV au départ : " + c2.getPV());
+            Log.v(TagLog.COMBAT, "PV au départ : " + c2.getPV());
             c2.setPV(c2.getPV() - Math.abs(resultat));
-            Log.v("COMBAT", "PV aprés l'attaque : " + c2.getPV());
+            Log.v(TagLog.COMBAT, "PV aprés l'attaque : " + c2.getPV());
         }
 
     }
