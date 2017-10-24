@@ -4,26 +4,19 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.R;
 
 /**
  * Created by Karl on 23/10/2017.
  */
 
-public class TraitementScan {
+public class TraitementHash {
 
-    private Context context;
+    public static String getTypeOfHash(String value) {
+        //
 
-    public TraitementScan(Context context) {
-
-        this.context = context;
-
-        String valeur = "8002270014901";
-    }
-
-    public String traitement(String value) {
-
-        return traitementNomTitreEtRace(HashService.hash(value));
+        // return traitementNomTitreEtRace(HashService.hash(value));
     }
 
     private String traitementNomTitreEtRace(String hash) {
@@ -46,13 +39,13 @@ public class TraitementScan {
         String titre = getStringResourcesFromArray(intTitre, R.array.titre_creature_array);
         String race = getStringResourcesFromArray(intRace, R.array.race_creature_array);
 
-        Log.i("Hash", smallHash + " : " + nom + " - " + titre + " - " + race);
+        Log.i(TagLog.SCAN, smallHash + " : " + nom + " - " + titre + " - " + race);
 
         return nom + " - " + titre + " - " + race;
     }
 
     public String getStringResourcesFromArray(int idValue, int arrayId) {
-        Resources res = context.getResources();
+        Resources res = MainActivity.getAppContext().getResources();
         String[] array = res.getStringArray(arrayId);
 
         if (idValue < array.length) {

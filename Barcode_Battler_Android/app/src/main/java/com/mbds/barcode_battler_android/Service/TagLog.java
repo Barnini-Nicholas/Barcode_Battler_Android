@@ -7,6 +7,6 @@ package com.mbds.barcode_battler_android.Service;
 public class TagLog {
 
     public static final String COMBAT = "COMBAT";
-    public static final String GEN = "GEN";
+    public static final String SCAN = "SCAN";
 
 }

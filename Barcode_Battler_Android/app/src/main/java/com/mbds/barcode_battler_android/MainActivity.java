@@ -1,5 +1,6 @@
 package com.mbds.barcode_battler_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import android.widget.Button;
 
 import com.mbds.barcode_battler_android.Controleur.GestionCombat;
 import com.mbds.barcode_battler_android.Modele.Creature;
-import com.mbds.barcode_battler_android.Service.TraitementScan;
+import com.mbds.barcode_battler_android.Service.TraitementHash;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
@@ -18,20 +19,26 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnScan;
 
-    TraitementScan traitementScan;
+    private static Context context;
+
+    TraitementHash traitementHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        traitementScan = new TraitementScan(getApplicationContext());
+        MainActivity.context = getApplicationContext();
+
+        traitementHash = new TraitementHash();
+
+
         Creature c1 = new Creature(10, 5, 5, "c1");
         Creature c2 = new Creature(10, 5, 5, "c2");
 
         new GestionCombat(c1, c2).commencerLaBagarre();
 
-        //new TraitementScan();
+
         btnScan = (Button) findViewById(R.id.btnScan);
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +57,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("oui", hash);
 
-        String result = traitementScan.traitement(hash);
+        String result = traitementHash.traitement(hash);
 
         Snackbar mySnackbar = Snackbar.make(findViewById(android.R.id.content), result, LENGTH_LONG);
         mySnackbar.show();
 
 
+    }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
     }
 }
