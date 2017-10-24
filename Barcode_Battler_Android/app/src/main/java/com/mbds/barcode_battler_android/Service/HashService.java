@@ -24,7 +24,7 @@ public class HashService {
             e.printStackTrace();
         }
 
-        Log.i("SHA1", value + " --> " + sha1);
+        Log.i("SHA1", value + " -> " + sha1);
 
         return sha1;
     }

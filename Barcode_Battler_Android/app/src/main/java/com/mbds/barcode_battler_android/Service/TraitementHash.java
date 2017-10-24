@@ -13,16 +13,30 @@ import com.mbds.barcode_battler_android.R;
 
 public class TraitementHash {
 
-    public static String getTypeOfHash(String value) {
-        //
+    /** A 1 minimum pour éviter qu'un monstre ait 0 PV */
+    private static final int BONUS_PV = 1;
 
-        // return traitementNomTitreEtRace(HashService.hash(value));
+    public static TypeButin getTypeOfHash(String value) {
+        // 1ère valeur
+        String firstVal = value.substring(0, 1);
+
+        // Passage en int
+        int intFirstVal = Integer.parseInt(firstVal, 16);
+
+        if (intFirstVal % 2 == 0) {
+            Log.i(TagLog.HASH, "Type du butin : " + TypeButin.CREATURE);
+            return TypeButin.CREATURE;
+        } else {
+            Log.i(TagLog.HASH, "Type du butin : " + TypeButin.EQUIPEMENT);
+            return TypeButin.EQUIPEMENT;
+        }
     }
 
-    private String traitementNomTitreEtRace(String hash) {
+    public static String getCreature(String hash) {
+        // *******************************
+        // -- TRAITEMENT DU NOM/TITRE/RACE
 
-        // Hash que l'on souhaite utiliser pour le nom
-        String smallHash = hash.substring(0, 3);
+        String smallHash = hash.substring(1, 4);
 
         // On découpe le hash
         String hashNom = smallHash.substring(0, 1);
@@ -39,12 +53,33 @@ public class TraitementHash {
         String titre = getStringResourcesFromArray(intTitre, R.array.titre_creature_array);
         String race = getStringResourcesFromArray(intRace, R.array.race_creature_array);
 
-        Log.i(TagLog.SCAN, smallHash + " : " + nom + " - " + titre + " - " + race);
+        Log.i(TagLog.HASH, "Nom : " + nom + " (" + hashNom + ")");
+        Log.i(TagLog.HASH, "Titre : " + titre + " (" + hashTitre + ")");
+        Log.i(TagLog.HASH, "Race : " + race + " (" + hashRace + ")");
+
+        // ****************************************
+        // -- 2 : TRAITEMENT DES CARACTERISTIQUES :
+
+        smallHash = hash.substring(4, 7);
+
+        // On découpe le hash
+        String hashPV = smallHash.substring(0, 1);
+        String hashPA = smallHash.substring(1, 2);
+        String hashPB = smallHash.substring(2, 3);
+
+        // Passage en int
+        int intPV = Integer.parseInt(hashPV, 16) + BONUS_PV;
+        int intPA = Integer.parseInt(hashPA, 16);
+        int intPB = Integer.parseInt(hashPB, 16);
+
+        Log.i(TagLog.HASH, "PV : " + intPV + " (" + hashPV + ")");
+        Log.i(TagLog.HASH, "PA : " + intPA + " (" + hashPA + ")");
+        Log.i(TagLog.HASH, "PB : " + intPB + " (" + hashPB + ")");
 
         return nom + " - " + titre + " - " + race;
     }
 
-    public String getStringResourcesFromArray(int idValue, int arrayId) {
+    public static String getStringResourcesFromArray(int idValue, int arrayId) {
         Resources res = MainActivity.getAppContext().getResources();
         String[] array = res.getStringArray(arrayId);
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.zxing.Result;
+import com.mbds.barcode_battler_android.Service.TagLog;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -36,20 +37,28 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v("AAAAAA", rawResult.getText()); // Prints scan results
 
-        Log.v("BBBBBB", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+        String barcode = rawResult.getText().toString();
+        String barcodeFormat = rawResult.getBarcodeFormat().toString();
 
-        String resultat = rawResult.getText().toString();
+        Log.i(TagLog.SCAN, "Barcode : " + barcode);
+        Log.i(TagLog.SCAN, "BarcodeFormat : " + barcodeFormat);
 
         Intent intent = new Intent();
-        intent.putExtra("hash", resultat);
+        intent.putExtra("barcode", barcode);
         setResult(1, intent);
         finish();
 
-        // If you would like to resume scanning, call this method below:
-        mScannerView.resumeCameraPreview(this);
+
+        // implements Parcelable
+        // writeToParcel(Parcel d, int flag){
+        //  d.writeStringArray([Nom, Prenom, ...]);
+        //}
+
+        //
+        //
+        //
+
     }
 
 

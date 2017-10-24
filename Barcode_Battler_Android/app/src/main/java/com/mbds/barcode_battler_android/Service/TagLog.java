@@ -8,5 +8,5 @@ public class TagLog {
 
     public static final String COMBAT = "COMBAT";
     public static final String SCAN = "SCAN";
-
+    public static final String HASH = "HASH";
 }

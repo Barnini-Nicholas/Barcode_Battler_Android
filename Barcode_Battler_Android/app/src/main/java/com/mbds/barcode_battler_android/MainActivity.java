@@ -11,7 +11,10 @@ import android.widget.Button;
 
 import com.mbds.barcode_battler_android.Controleur.GestionCombat;
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Service.HashService;
+import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Service.TraitementHash;
+import com.mbds.barcode_battler_android.Service.TypeButin;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
@@ -22,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static Context context;
 
-    TraitementHash traitementHash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         MainActivity.context = getApplicationContext();
-
-        traitementHash = new TraitementHash();
 
 
         Creature c1 = new Creature(10, 5, 5, "c1");
@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
-        //new TraitementScan();
+
         btnListCreature = (Button) findViewById(R.id.btnListCreature);
         btnListCreature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListCreatureActivity.class);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
     }
@@ -63,16 +63,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String hash = data.getStringExtra("hash");
+        // Récupération de la valeur du barcode scanné
+        String barcode = data.getStringExtra("barcode");
 
-        Log.i("oui", hash);
+        // On hash le barcode en SHA1
+        String hash = HashService.hash(barcode);
 
-        String result = traitementHash.traitement(hash);
+        // Récupération du type de butin
+        TypeButin typeButin = TraitementHash.getTypeOfHash(hash);
+
+        String result = "";
+
+        switch (typeButin) {
+
+            case CREATURE:
+                result = TraitementHash.getCreature(hash);
+                break;
+
+            case EQUIPEMENT:
+                result = "Not implemented";
+                break;
+        }
 
         Snackbar mySnackbar = Snackbar.make(findViewById(android.R.id.content), result, LENGTH_LONG);
         mySnackbar.show();
-
-
     }
 
     public static Context getAppContext() {
