@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nom_equipement_array">
+        <item>Casque</item>
+        <item>Armure</item>
+        <item>Gant</item>
+        <item>Epée</item>
+        <item>Hache</item>
+        <item>Pistolet</item>
+        <item>Baton</item>
+        <item>Caillou</item>
+        <item>Bouclier</item>
+        <item>Gilet</item>
+        <item>Botte</item>
+        <item>Caleçon</item>
+        <item>Chaussette</item>
+        <item>Marteau</item>
+        <item>Poubelle</item>
+        <item>Carton</item>
+    </string-array>
+
+</resources>

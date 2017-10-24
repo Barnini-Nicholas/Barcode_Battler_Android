@@ -7,29 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mbds.barcode_battler_android.Modele.Joueur;
 
 public class ListCreatureActivity extends AppCompatActivity implements ListAdapter {
 
-    ArrayList<Creature> listCreature;
     View returnView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_creature);
-
-        listCreature = new ArrayList<Creature>();
-        listCreature.add(new Creature("Pierre","Le Paysan","",10, 5, 5));
-        listCreature.add(new Creature("Karl","","",10, 7, 3));
-        listCreature.add(new Creature("Nicholas","","",10, 3, 7));
 
         ListView lv = (ListView) findViewById(R.id.listViewCreature);
         lv.setAdapter(this);
@@ -57,12 +48,12 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
 
     @Override
     public int getCount() {
-        return listCreature.size();
+        return Joueur.getInstance().getListCreatures().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listCreature.get(position);
+        return Joueur.getInstance().getListCreatures().get(position);
     }
 
     @Override
@@ -79,24 +70,24 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
     public View getView(int position, View convertView, ViewGroup parent) {
 
         returnView = View.inflate(this, R.layout.layout_bouton_list_creature, null);
-        Creature c = listCreature.get(position);
+        Creature c = Joueur.getInstance().getListCreatures().get(position);
 
         TextView txNom = (TextView) returnView.findViewById(R.id.textCreatureNom);
-        txNom.setText(" Nom:" + c.getNom());
+        txNom.setText(c.getNomEtTitre());
 
         TextView txPV = (TextView) returnView.findViewById(R.id.textCreaturePV);
-        txPV.setText(" PV:" + c.getPV());
+        txPV.setText(" PV : " + c.getPV());
 
         TextView txPA = (TextView) returnView.findViewById(R.id.textCreaturePA);
-        txPA.setText(" PA:" + c.getPA());
+        txPA.setText(" PA : " + c.getPA());
 
         TextView txPB = (TextView) returnView.findViewById(R.id.textCreaturePB);
-        txPB.setText(" PB:" + c.getPB());
+        txPB.setText(" PB : " + c.getPB());
 
         returnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -115,6 +106,6 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
 
     @Override
     public boolean isEmpty() {
-        return listCreature.isEmpty();
+        return Joueur.getInstance().getListCreatures().isEmpty();
     }
 }

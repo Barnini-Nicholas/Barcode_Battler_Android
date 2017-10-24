@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.R;
 
 /**
@@ -35,7 +36,7 @@ public class TraitementHash {
         }
     }
 
-    public static Creature  getCreature(String hash) {
+    public static Creature getCreature(String hash) {
         // *******************************
         // -- TRAITEMENT DU NOM/TITRE/RACE
 
@@ -56,9 +57,9 @@ public class TraitementHash {
         String titre = getStringResourcesFromArray(intTitre, R.array.titre_creature_array);
         String race = getStringResourcesFromArray(intRace, R.array.race_creature_array);
 
-        Log.i(TagLog.HASH, "Nom : " + nom + " (" + hashNom + ")");
-        Log.i(TagLog.HASH, "Titre : " + titre + " (" + hashTitre + ")");
-        Log.i(TagLog.HASH, "Race : " + race + " (" + hashRace + ")");
+        Log.i(TagLog.HASH_CREATURE, "Nom : " + nom + " (" + hashNom + ")");
+        Log.i(TagLog.HASH_CREATURE, "Titre : " + titre + " (" + hashTitre + ")");
+        Log.i(TagLog.HASH_CREATURE, "Race : " + race + " (" + hashRace + ")");
 
         // ****************************************
         // -- 2 : TRAITEMENT DES CARACTERISTIQUES :
@@ -75,11 +76,53 @@ public class TraitementHash {
         int PA = Integer.parseInt(hashPA, 16);
         int PB = Integer.parseInt(hashPB, 16);
 
-        Log.i(TagLog.HASH, "PV : " + PV + " (" + hashPV + ")");
-        Log.i(TagLog.HASH, "PA : " + PA + " (" + hashPA + ")");
-        Log.i(TagLog.HASH, "PB : " + PB + " (" + hashPB + ")");
+        Log.i(TagLog.HASH_CREATURE, "PV : " + PV + " (" + hashPV + ")");
+        Log.i(TagLog.HASH_CREATURE, "PA : " + PA + " (" + hashPA + ")");
+        Log.i(TagLog.HASH_CREATURE, "PB : " + PB + " (" + hashPB + ")");
 
         return new Creature(nom, titre, race, PV, PA, PB);
+    }
+
+    public static Equipement getEquipement(String hash) {
+        // *******************************
+        // -- TRAITEMENT DU NOM
+
+        String smallHash = hash.substring(1, 3);
+
+        // On découpe le hash
+        String hashNom = smallHash.substring(0, 1);
+        String hashComplementNom = smallHash.substring(1, 2);
+
+        // Passage en int
+        int intNom = Integer.parseInt(hashNom, 16);
+        int intCompNom = Integer.parseInt(hashComplementNom, 16);
+
+        // On récupère la String correspond au int
+        String nom = getStringResourcesFromArray(intNom, R.array.nom_equipement_array);
+        nom = nom + " " + getStringResourcesFromArray(intCompNom, R.array.compNom_equipement_array);
+
+        Log.i(TagLog.HASH_EQUIPEMENT, "Nom : " + nom + " (" + hashNom + hashComplementNom + ")");
+
+        // ****************************************
+        // -- 2 : TRAITEMENT DES CARACTERISTIQUES :
+
+        smallHash = hash.substring(4, 7);
+
+        // On découpe le hash
+        String hashBonusPV = smallHash.substring(0, 1);
+        String hashBonusPA = smallHash.substring(1, 2);
+        String hashBonusPB = smallHash.substring(2, 3);
+
+        // Passage en int
+        int bonusPV = Integer.parseInt(hashBonusPV, 16);
+        int bonusPA = Integer.parseInt(hashBonusPA, 16);
+        int bonusPB = Integer.parseInt(hashBonusPB, 16);
+
+        Log.i(TagLog.HASH_EQUIPEMENT, "bonusPV : " + bonusPV + " (" + hashBonusPV + ")");
+        Log.i(TagLog.HASH_EQUIPEMENT, "bonusPA : " + bonusPA + " (" + hashBonusPA + ")");
+        Log.i(TagLog.HASH_EQUIPEMENT, "bonusPB : " + bonusPB + " (" + hashBonusPB + ")");
+
+        return new Equipement(nom, bonusPV, bonusPA, bonusPB);
     }
 
     public static String getStringResourcesFromArray(int idValue, int arrayId) {

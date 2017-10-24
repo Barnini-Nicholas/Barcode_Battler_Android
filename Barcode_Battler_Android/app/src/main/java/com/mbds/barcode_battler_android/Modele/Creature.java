@@ -146,6 +146,10 @@ public class Creature implements Parcelable {
         return nom;
     }
 
+    public String getNomEtTitre() {
+        return nom + " " + titre;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }

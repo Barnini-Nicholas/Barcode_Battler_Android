@@ -9,4 +9,6 @@ public class TagLog {
     public static final String COMBAT = "COMBAT";
     public static final String SCAN = "SCAN";
     public static final String HASH = "HASH";
+    public static final String HASH_CREATURE = "HASH_CREATURE";
+    public static final String HASH_EQUIPEMENT = "HASH_EQUIPEMENT";
 }

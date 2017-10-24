@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.google.zxing.Result;
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Service.HashService;
 import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Service.TraitementHash;
@@ -59,6 +60,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 
         Intent intent = new Intent();
+        intent.putExtra("typeButin", typeButin.toString());
 
         switch (typeButin) {
 
@@ -68,7 +70,8 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 break;
 
             case EQUIPEMENT:
-
+                Equipement equipement = TraitementHash.getEquipement(hash);
+                intent.putExtra("butin", equipement);
                 break;
         }
 

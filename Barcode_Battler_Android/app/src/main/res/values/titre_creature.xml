@@ -2,22 +2,22 @@
 <resources>
 
     <string-array name="titre_creature_array">
-        <item>Le développeur web</item>
-        <item>L\'oeil de taupe</item>
-        <item>Le bagarreur</item>
-        <item>Le malin</item>
-        <item>Le fourbe</item>
-        <item>L\'unijambiste</item>
-        <item>La folle</item>
-        <item>Le fier</item>
-        <item>Le fou</item>
-        <item>L\'illuminé</item>
-        <item>Le furieux</item>
-        <item>Le brave</item>
-        <item>Le pilote</item>
-        <item>Le footballeur</item>
-        <item>Le fils à papa</item>
-        <item>Le paysan</item>
+        <item>le développeur web</item>
+        <item>l\'oeil de taupe</item>
+        <item>le bagarreur</item>
+        <item>le malin</item>
+        <item>le fourbe</item>
+        <item>l\'unijambiste</item>
+        <item>la menace</item>
+        <item>le fier</item>
+        <item>le fou</item>
+        <item>l\'illuminé</item>
+        <item>le furieux</item>
+        <item>le brave</item>
+        <item>le pilote</item>
+        <item>le footballeur</item>
+        <item>le fils à papa</item>
+        <item>le paysan</item>
     </string-array>
 
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="compNom_equipement_array">
+        <item>de fer</item>
+        <item>de cuir</item>
+        <item>de métal</item>
+        <item>de papier</item>
+        <item>de feuille</item>
+        <item>plutôt costaud</item>
+        <item>en carton</item>
+        <item>du boulanger</item>
+        <item>légendaire</item>
+        <item>un peu moche</item>
+        <item>ancien</item>
+        <item>en brique</item>
+        <item>de pierre</item>
+        <item>qui pèse</item>
+        <item>assez lourd</item>
+        <item>commun</item>
+    </string-array>
+
+</resources>

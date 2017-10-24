@@ -2,21 +2,18 @@ package com.mbds.barcode_battler_android;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.mbds.barcode_battler_android.Controleur.GestionCombat;
 import com.mbds.barcode_battler_android.Modele.Creature;
-import com.mbds.barcode_battler_android.Service.HashService;
+import com.mbds.barcode_battler_android.Modele.Equipement;
+import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.Service.TagLog;
-import com.mbds.barcode_battler_android.Service.TraitementHash;
 import com.mbds.barcode_battler_android.Service.TypeButin;
-
-import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,9 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i("OUI", ((Creature) data.getExtras().getParcelable("butin")).toString());
+        TypeButin typeButin = TypeButin.valueOf(data.getExtras().getString("typeButin"));
+        ((TextView) findViewById(R.id.textInfo)).setText(data.getExtras().getParcelable("butin").toString());
+
+        switch (typeButin) {
+            case CREATURE:
+                Creature creature = (Creature) data.getExtras().getParcelable("butin");
+                Log.i(TagLog.HASH_CREATURE, creature.toString());
+                Joueur.getInstance().addCreature(creature);
+                break;
+
+            case EQUIPEMENT:
+                Equipement equipement = (Equipement) data.getExtras().getParcelable("butin");
+                Log.i(TagLog.HASH_EQUIPEMENT, equipement.toString());
+                break;
+        }
     }
 
     public static Context getAppContext() {
