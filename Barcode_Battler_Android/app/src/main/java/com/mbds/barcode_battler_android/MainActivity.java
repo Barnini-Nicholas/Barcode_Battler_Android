@@ -18,6 +18,7 @@ import static android.support.design.widget.Snackbar.LENGTH_LONG;
 public class MainActivity extends AppCompatActivity {
 
     Button btnScan;
+    Button btnListCreature;
 
     private static Context context;
 
@@ -44,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+        //new TraitementScan();
+        btnListCreature = (Button) findViewById(R.id.btnListCreature);
+        btnListCreature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListCreatureActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
