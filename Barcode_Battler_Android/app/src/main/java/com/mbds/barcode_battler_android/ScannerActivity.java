@@ -72,7 +72,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 break;
         }
 
-        setResult(1, intent);
+        setResult(RESULT_OK, intent);
         finish();
 
 
