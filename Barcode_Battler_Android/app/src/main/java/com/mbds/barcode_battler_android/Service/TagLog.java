@@ -11,5 +11,6 @@ public class TagLog {
     public static final String HASH = "HASH";
     public static final String HASH_CREATURE = "HASH_CREATURE";
     public static final String HASH_EQUIPEMENT = "HASH_EQUIPEMENT";
-    public static final String BD_EQUIPEMENT = "BD Equipement";
+    public static final String BD_EQUIPEMENT = "BD EQUIPEMENT";
+    public static final String BD_CREATURE = "BD CREATURE";
 }
