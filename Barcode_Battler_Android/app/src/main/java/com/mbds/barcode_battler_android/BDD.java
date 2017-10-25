@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
@@ -64,6 +63,12 @@ public class BDD extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
         db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
         onCreate(db);
+    }
+
+    public void deleteAllTables(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
+        db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
     }
 
     public void addCreature(Creature c){
