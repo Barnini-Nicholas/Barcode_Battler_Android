@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
+import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ import java.util.ArrayList;
  */
 
 public class BDD extends SQLiteOpenHelper {
+
+
+    private static final BDD ourInstance = new BDD();
 
     // TABLE EQUIPEMENT
 
@@ -47,9 +51,12 @@ public class BDD extends SQLiteOpenHelper {
             + COL_ID_CREATURE + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_CREATURE + " TEXT NOT NULL, " + TITRE + " TEXT NOT NULL, " + RACE + " TEXT NOT NULL, "
             + PV + " INTEGER NOT NULL, " + PA + " INTEGER NOT NULL, " + PB + " INTEGER NOT NULL);";
 
+    public static BDD getInstance() {
+        return ourInstance;
+    }
 
-    public BDD(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private BDD() {
+        super(MainActivity.getAppContext(), "database_File.db", null, 1);
     }
 
     @Override
@@ -65,28 +72,28 @@ public class BDD extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void deleteAllTables(){
+    public void deleteAllTables() {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
 
-        if(this.getEquipement() != null){
+        if (BDD.getInstance().getEquipement() != null) {
             db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
         }
 
-        if(this.getCreature() != null){
+        if (BDD.getInstance().getCreature() != null) {
             db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
         }
     }
 
     public void createTablesAgain() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         db.execSQL(CREATE_CREATURE);
         db.execSQL(CREATE_EQUIPEMENT);
     }
 
-    public void addCreature(Creature c){
+    public void addCreature(Creature c) {
         Log.v(TagLog.BD_CREATURE, "Insert d'un équipement : " + c);
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NOM_CREATURE, c.getNom());
         values.put(TITRE, c.getTitre());
@@ -99,9 +106,9 @@ public class BDD extends SQLiteOpenHelper {
     }
 
     public ArrayList<Creature> getCreature() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         //Récupère dans un Cursor les valeurs correspondant à une créature contenu dans la BDD
-        Cursor c = db.query(TABLE_CREATURE, new String[]{COL_ID_CREATURE, NOM_CREATURE, TITRE, RACE, PV,PA, PB}, null, null, null, null, null);
+        Cursor c = db.query(TABLE_CREATURE, new String[]{COL_ID_CREATURE, NOM_CREATURE, TITRE, RACE, PV, PA, PB}, null, null, null, null, null);
         return cursorToCreature(c);
     }
 
@@ -138,7 +145,7 @@ public class BDD extends SQLiteOpenHelper {
 
     public void addEquipement(Equipement e) {
         Log.v(TagLog.BD_EQUIPEMENT, "Insert d'un équipement : " + e);
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NOM_EQUIPEMENT, e.getNom());
         values.put(bonusPV, e.getBonusPV());
@@ -149,7 +156,7 @@ public class BDD extends SQLiteOpenHelper {
     }
 
     public ArrayList<Equipement> getEquipement() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         //Récupère dans un Cursor les valeurs correspondant à un livre contenu dans la BDD (ici on sélectionne le livre grâce à son titre)
         Cursor c = db.query(TABLE_EQUIPEMENT, new String[]{COL_ID_EQUIPEMENT, NOM_EQUIPEMENT, bonusPV, bonusPA, bonusPB}, null, null, null, null, null);
         return cursorToEquipement(c);

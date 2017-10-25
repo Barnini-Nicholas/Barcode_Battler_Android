@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         // new GestionCombat(c1, c2).commencerLaBagarre();
 
-        BDD bdd = new BDD( getApplicationContext(), "database_File.db", null, 1);
-       // bdd.deleteAllTables();
-       // bdd.createTablesAgain();
+
+        // bdd.deleteAllTables();
+        // bdd.createTablesAgain();
         /*
         Equipement e1 = new Equipement("aa", 10, 5 ,1);
         Equipement e2 = new Equipement("bb", 9, 4 ,8);
@@ -52,14 +52,6 @@ public class MainActivity extends AppCompatActivity {
         bdd.addEquipement(e4);
         Log.v("BDDDDDDDDDDDDDDDDD", bdd.getEquipement().toString() + " ALLO STP MARCHE");
         */
-
-        ArrayList<Creature> listCret = new ArrayList<Creature>();
-        listCret.add(new Creature("a1", "a2", "a3", 1, 2 ,3));
-        listCret.add(new Creature("b1", "b2", "b3", 4, 5 ,6));
-        listCret.add(new Creature("c1", "c2", "c3", 7, 8 ,9));
-        for(Creature c : listCret)
-            bdd.addCreature(c);
-        Log.v("BDDDDDDDDDDDDDDDDD", bdd.getCreature().toString() + " ALLO STP MARCHE");
 
 
         btnScan = (Button) findViewById(R.id.btnScan);

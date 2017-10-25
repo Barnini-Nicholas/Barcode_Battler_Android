@@ -1,5 +1,7 @@
 package com.mbds.barcode_battler_android.Modele;
 
+import com.mbds.barcode_battler_android.BDD;
+
 import java.util.ArrayList;
 
 /**
@@ -18,16 +20,17 @@ public class Joueur {
     }
 
     private Joueur() {
-        listCreatures = new ArrayList<>();
-        listCreatures.add(new Creature("Pierre","Le Paysan","",10, 5, 5));
-        listCreatures.add(new Creature("Karl","","",10, 7, 3));
-        listCreatures.add(new Creature("Nicholas","","",10, 3, 7));
+        listCreatures = BDD.getInstance().getCreature();
+        // listCreatures.add(new Creature("Pierre","Le Paysan","",10, 5, 5));
+        // listCreatures.add(new Creature("Karl","","",10, 7, 3));
+        // listCreatures.add(new Creature("Nicholas","","",10, 3, 7));
 
         listEquipements = new ArrayList<>();
     }
 
     public void addCreature(Creature creature) {
-        listCreatures.add(creature);
+        BDD.getInstance().addCreature(creature);
+        listCreatures = BDD.getInstance().getCreature();
     }
 
     public ArrayList<Creature> getListCreatures() {
