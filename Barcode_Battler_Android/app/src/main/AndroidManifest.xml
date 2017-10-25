@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListCreatureActivity"></activity>
+        <activity android:name=".AffichageCreatureActivity"></activity>
     </application>
 
 </manifest>

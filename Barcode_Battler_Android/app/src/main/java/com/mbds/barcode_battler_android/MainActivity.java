@@ -79,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 Creature creature = (Creature) data.getExtras().getParcelable("butin");
                 Log.i(TagLog.HASH_CREATURE, creature.toString());
                 Joueur.getInstance().addCreature(creature);
+
+                Intent intent = new Intent(MainActivity.this, AffichageCreatureActivity.class);
+                intent.putExtra("creature", creature);
+
+                startActivity(intent);
                 break;
 
             case EQUIPEMENT:
