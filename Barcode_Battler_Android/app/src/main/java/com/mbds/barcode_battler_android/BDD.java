@@ -66,9 +66,22 @@ public class BDD extends SQLiteOpenHelper {
     }
 
     public void deleteAllTables(){
+
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
-        db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
+
+        if(this.getEquipement() != null){
+            db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
+        }
+
+        if(this.getCreature() != null){
+            db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
+        }
+    }
+
+    public void createTablesAgain() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(CREATE_CREATURE);
+        db.execSQL(CREATE_EQUIPEMENT);
     }
 
     public void addCreature(Creature c){
@@ -78,9 +91,9 @@ public class BDD extends SQLiteOpenHelper {
         values.put(NOM_CREATURE, c.getNom());
         values.put(TITRE, c.getTitre());
         values.put(RACE, c.getRace());
-        values.put(bonusPV, c.getPV());
-        values.put(bonusPA, c.getPA());
-        values.put(bonusPB, c.getPB());
+        values.put(PV, c.getPV());
+        values.put(PA, c.getPA());
+        values.put(PB, c.getPB());
         db.insert(TABLE_CREATURE, null, values);
         db.close();
     }
@@ -172,5 +185,4 @@ public class BDD extends SQLiteOpenHelper {
         //On retourne le l'equipement
         return listEquip;
     }
-
 }
