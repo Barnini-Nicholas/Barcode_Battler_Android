@@ -11,7 +11,6 @@ import android.util.Log;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,16 +19,34 @@ import java.util.ArrayList;
 
 public class BDD extends SQLiteOpenHelper {
 
+    // TABLE EQUIPEMENT
+
     private static final String TABLE_EQUIPEMENT = "table_EQUIPEMENT";
-    private static final String COL_ID = "ID";
-    private static final String NOM = "NOM";
+    private static final String COL_ID_EQUIPEMENT = "ID";
+    private static final String NOM_EQUIPEMENT = "NOM";
     private static final String bonusPV = "BONUSPV";
     private static final String bonusPA = "BONUSPA";
     private static final String bonusPB = "BONUSPB";
 
-    private static final String CREATE_BDD = "CREATE TABLE " + TABLE_EQUIPEMENT + " ("
-            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM + " TEXT NOT NULL, "
+    private static final String CREATE_EQUIPEMENT = "CREATE TABLE " + TABLE_EQUIPEMENT + " ("
+            + COL_ID_EQUIPEMENT + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_EQUIPEMENT + " TEXT NOT NULL, "
             + bonusPV + " INTEGER NOT NULL, " + bonusPA + " INTEGER NOT NULL, " + bonusPB + " INTEGER NOT NULL);";
+
+    // TABLE CREATURE
+
+    private static final String TABLE_CREATURE = "table_CREATURE";
+    private static final String COL_ID_CREATURE = "ID";
+    private static final String NOM_CREATURE = "NOM";
+    private static final String TITRE = "TITRE";
+    private static final String RACE = "RACE";
+    private static final String PV = "PV";
+    private static final String PA = "PA";
+    private static final String PB = "PB";
+
+    private static final String CREATE_CREATURE = "CREATE TABLE " + TABLE_CREATURE + " ("
+            + COL_ID_CREATURE + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_CREATURE + " TEXT NOT NULL, " + TITRE + " TEXT NOT NULL, " + RACE + " TEXT NOT NULL, "
+            + PV + " INTEGER NOT NULL, " + PA + " INTEGER NOT NULL, " + PB + " INTEGER NOT NULL);";
+
 
     public BDD(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -37,12 +54,14 @@ public class BDD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_BDD);
+        db.execSQL(CREATE_CREATURE);
+        db.execSQL(CREATE_EQUIPEMENT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
+        db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
         onCreate(db);
     }
 
@@ -50,7 +69,7 @@ public class BDD extends SQLiteOpenHelper {
         Log.v(TagLog.BD_EQUIPEMENT, "Insert d'un équipement : " + e);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(NOM, e.getNom());
+        values.put(NOM_CREATURE, e.getNom());
         values.put(bonusPV, e.getBonusPV());
         values.put(bonusPA, e.getBonusPA());
         values.put(bonusPB, e.getBonusPB());
@@ -61,7 +80,7 @@ public class BDD extends SQLiteOpenHelper {
     public ArrayList<Equipement> getEquipement() {
         SQLiteDatabase db = this.getWritableDatabase();
         //Récupère dans un Cursor les valeurs correspondant à un livre contenu dans la BDD (ici on sélectionne le livre grâce à son titre)
-        Cursor c = db.query(TABLE_EQUIPEMENT, new String[]{COL_ID, NOM, bonusPV, bonusPA, bonusPB}, null, null, null, null, null);
+        Cursor c = db.query(TABLE_EQUIPEMENT, new String[]{COL_ID_CREATURE, NOM_CREATURE, bonusPV, bonusPA, bonusPB}, null, null, null, null, null);
         return cursorToEquipement(c);
     }
 
