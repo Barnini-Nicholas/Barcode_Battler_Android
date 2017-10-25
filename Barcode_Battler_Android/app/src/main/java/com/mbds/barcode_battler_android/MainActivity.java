@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
         TypeButin typeButin = TypeButin.valueOf(data.getExtras().getString("typeButin"));
         ((TextView) findViewById(R.id.textInfo)).setText(data.getExtras().getParcelable("butin").toString());
 
