@@ -22,7 +22,7 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combat);
 
-        TextView textView = (TextView) findViewById(R.id.textcombat);
+        textView = (TextView) findViewById(R.id.textcombat);
 
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
