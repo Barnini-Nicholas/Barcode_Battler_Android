@@ -80,7 +80,7 @@ public class TraitementHash {
         Log.i(TagLog.HASH_CREATURE, "PA : " + PA + " (" + hashPA + ")");
         Log.i(TagLog.HASH_CREATURE, "PB : " + PB + " (" + hashPB + ")");
 
-        return new Creature(nom, titre, race, PV, PA, PB);
+        return new Creature(nom, titre, race, PV, PA, PB, hash);
     }
 
     public static Equipement getEquipement(String hash) {
@@ -122,7 +122,7 @@ public class TraitementHash {
         Log.i(TagLog.HASH_EQUIPEMENT, "bonusPA : " + bonusPA + " (" + hashBonusPA + ")");
         Log.i(TagLog.HASH_EQUIPEMENT, "bonusPB : " + bonusPB + " (" + hashBonusPB + ")");
 
-        return new Equipement(nom, bonusPV, bonusPA, bonusPB);
+        return new Equipement(nom, bonusPV, bonusPA, bonusPB, hash);
     }
 
     public static String getStringResourcesFromArray(int idValue, int arrayId) {

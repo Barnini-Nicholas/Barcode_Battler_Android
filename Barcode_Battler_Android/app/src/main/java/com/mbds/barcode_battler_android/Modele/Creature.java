@@ -45,7 +45,7 @@ public class Creature implements Parcelable {
 
     // Parcelling part
     public Creature(Parcel in) {
-        String[] data = new String[6];
+        String[] data = new String[7];
 
         in.readStringArray(data);
         int i = 0;
@@ -56,6 +56,7 @@ public class Creature implements Parcelable {
         PV = Integer.parseInt(data[i++]);
         PA = Integer.parseInt(data[i++]);
         PB = Integer.parseInt(data[i++]);
+        codeBarreUtilise = data[i++];
 
         listEquipement = new ArrayList<>();
     }
@@ -87,7 +88,7 @@ public class Creature implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{nom, titre, race, PV + "", PA + "", PB + ""});
+        dest.writeStringArray(new String[]{nom, titre, race, PV + "", PA + "", PB + "", codeBarreUtilise});
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {

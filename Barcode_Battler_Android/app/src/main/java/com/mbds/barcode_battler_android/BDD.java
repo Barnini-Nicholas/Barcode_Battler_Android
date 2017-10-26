@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 
 public class BDD extends SQLiteOpenHelper {
+    private static int DB_VERSION = 2;
 
 
     private static final BDD ourInstance = new BDD();
@@ -61,7 +62,7 @@ public class BDD extends SQLiteOpenHelper {
     }
 
     private BDD() {
-        super(MainActivity.getAppContext(), "database_File.db", null, 1);
+        super(MainActivity.getAppContext(), "database_File.db", null, DB_VERSION);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class AffichageCreatureActivity extends AppCompatActivity {
         textRace.setText(creature.getRace());
 
         imageRace = (ImageView) findViewById(R.id.image_race);
-        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(creature.getRace().toLowerCase(), "drawable",
+        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(creature.getRace().toLowerCase().replaceAll("é","e"), "drawable",
                 MainActivity.getAppContext().getPackageName()));
 
         layoutRarete = (LinearLayout) findViewById(R.id.rarity);
