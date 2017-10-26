@@ -1,136 +1,191 @@
 package com.mbds.barcode_battler_android;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
-import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Modele.TypeButin;
+import com.mbds.barcode_battler_android.Service.HashService;
+import com.mbds.barcode_battler_android.Service.TagLog;
+import com.mbds.barcode_battler_android.Service.TraitementHash;
+import com.mbds.barcode_battler_android.fragment.CreatureScanFragment;
+import com.mbds.barcode_battler_android.fragment.CreaturesFragment;
+import com.mbds.barcode_battler_android.fragment.EquipementScanFragment;
+import com.mbds.barcode_battler_android.fragment.EquipementsFragment;
+import com.mbds.barcode_battler_android.fragment.ScannerFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements ScannerFragment.OnScanEffectue {
 
-public class MainActivity extends AppCompatActivity {
-
-    Button btnScan;
-    Button btnListCreature;
-    Button btnCombat;
 
     private static Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         MainActivity.context = getApplicationContext();
-
-
-        BDD bd = BDD.getInstance();
-        Creature c1 = new Creature("nom", "titre", "race", 10, 5, 5, "cb");
-        Equipement e1 = new Equipement("aa", 10, 5 ,1, "");
-        bd.addCreature(c1);
-        bd.addEquipement(e1);
-        ArrayList<Equipement> le = bd.getEquipement();
-        ArrayList<Creature> lc = bd.getCreature();
-        Log.v("TESSSSSSSSSSSSSSSST", "STP MARCHE le : "+ le );
-        Log.v("TESSSSSSSSSSSSSSSST", "STP MARCHE lc : "+ lc );
-        bd.addEquipementToCreature(lc.get(lc.size()-1), le.get(le.size()-1));
-        Log.v("TESSSSSSSSSSSSSSSST", "STP MARCHE fin : " + bd.getEquipementsOfCreature(lc.get(lc.size() -1 ).getId()));
-
-        // Creature c2 = new Creature(10, 5, 5, "c2");
-
-        /*
-        Equipement e1 = new Equipement("aa", 10, 5 ,1);
-        Equipement e2 = new Equipement("bb", 9, 4 ,8);
-        Equipement e3 = new Equipement("cc", 8, 3 ,9);
-        Equipement e4 = new Equipement("dd", 7, 2 ,6);
-
-        Log.v("BDDDDDDDDDDDDDDDDD", bdd.getEquipement().toString() + " ALLO STP MARCHE");
-        */
-
-
-        btnScan = (Button) findViewById(R.id.btnScan);
-        btnScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ScannerActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
-
-        btnListCreature = (Button) findViewById(R.id.btnListCreature);
-        btnListCreature.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListCreatureActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        btnCombat = (Button) findViewById(R.id.btnCombat);
-        btnCombat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CombatActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_button_bar, menu);
+        return true;
+    }
 
-        if (resultCode != RESULT_OK) {
-            return;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_scanner:
+                // Create a new Fragment to be placed in the activity layout
+                ScannerFragment scannerFragment = new ScannerFragment();
+                scannerFragment.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, scannerFragment).commit();
+                return true;
+
+            case R.id.action_ouvrir_creatures:
+                lancerFragmentCreatures();
+                return true;
+
+            case R.id.action_ouvrir_equipements:
+                lancerFragmentEquipements();
+                return true;
+
+            case R.id.action_lancer_combat:
+                Toast.makeText(getApplicationContext(), "La bagarre !", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
         }
+    }
 
-        TypeButin typeButin = TypeButin.valueOf(data.getExtras().getString("typeButin"));
-        ((TextView) findViewById(R.id.textInfo)).setText(data.getExtras().getParcelable("butin").toString());
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
+
+    @Override
+    public void scanEffectue(String codeBarre) {
+        // On hash le barcode en SHA1
+        String hash = HashService.hash(codeBarre);
+
+        // Récupération du type de butin
+        TypeButin typeButin = TraitementHash.getTypeOfHash(hash);
 
         switch (typeButin) {
+
             case CREATURE:
-                Creature creature = (Creature) data.getExtras().getParcelable("butin");
-                Log.i(TagLog.HASH_CREATURE, creature.toString());
-
-                // Controle pour voir si la créature a déja été scanné :
-                for (Creature c : Joueur.getInstance().getListCreatures()) {
-                    if (creature.getCodeBarreUtilise().equals(c.getCodeBarreUtilise())) {
-                        Toast.makeText(getApplicationContext(), "Déja scanné tricheur", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-
-                Intent intent = new Intent(MainActivity.this, AffichageCreatureActivity.class);
-                intent.putExtra("creature", creature);
-                startActivity(intent);
-
+                lancerFragmentCreatureScan(hash);
                 break;
 
             case EQUIPEMENT:
-                Equipement equipement = (Equipement) data.getExtras().getParcelable("butin");
-                Log.i(TagLog.HASH_EQUIPEMENT, equipement.toString());
-
-                Intent intent2 = new Intent(MainActivity.this, AffichageEquipementActivity.class);
-                intent2.putExtra("equipement", equipement);
-                startActivity(intent2);
-
+                lancerFragmentEquipementScan(hash);
                 break;
         }
     }
 
-    public static Context getAppContext() {
-        return MainActivity.context;
+    private void lancerFragmentEquipements() {
+        EquipementsFragment equipementsFragment = new EquipementsFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, equipementsFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void lancerFragmentCreatures() {
+        CreaturesFragment creaturesFragment = new CreaturesFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, creaturesFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void lancerFragmentCreatureScan(String hash) {
+
+        // On récupère la créature générée
+        Creature creature = TraitementHash.getCreature(hash);
+        Log.i(TagLog.SHOW_CREATURE, creature.toString());
+
+        // Controle pour voir si la créature a déja été scannée :
+        for (Creature c : Joueur.getInstance().getListCreatures()) {
+            if (creature.getCodeBarreUtilise().equals(c.getCodeBarreUtilise())) {
+                Toast.makeText(getApplicationContext(), "Déja scanné tricheur", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        // Création du fragment qui affiche la créature
+        CreatureScanFragment creatureScanFragment = new CreatureScanFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelable("creature", creature);
+        creatureScanFragment.setArguments(args);
+
+        // Début de la transaction pour ajouter ce fragment et lui passer la Créature
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, creatureScanFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void lancerFragmentEquipementScan(String hash) {
+
+        // On récupère l'équipement généré
+        Equipement equipement = TraitementHash.getEquipement(hash);
+        Log.i(TagLog.SHOW_CREATURE, equipement.toString());
+
+        // Controle pour voir si l'équipement a déja été scannée :
+        for (Equipement e : Joueur.getInstance().getListEquipement()) {
+            if (equipement.getCodeBarreUtilise().equals(e.getCodeBarreUtilise())) {
+                Toast.makeText(getApplicationContext(), "Déja scanné tricheur", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        // Création du fragment
+        EquipementScanFragment equipementScanFragment = new EquipementScanFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelable("equipement", equipement);
+        equipementScanFragment.setArguments(args);
+
+        // Début de la transaction pour ajouter ce fragment et lui passer l'équipement
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, equipementScanFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 }

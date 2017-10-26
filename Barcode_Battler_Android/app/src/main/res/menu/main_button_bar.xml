@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Lancer un combat -->
+    <item
+        android:id="@+id/action_lancer_combat"
+        android:icon="@drawable/fight"
+        android:title="Combat"
+        app:showAsAction="always" />
+
+    <!-- Ouvrir la collection des équipements -->
+    <item
+        android:id="@+id/action_ouvrir_equipements"
+        android:icon="@drawable/shield"
+        android:title="Equipements"
+        app:showAsAction="always" />
+
+    <!-- Ouvrir la collection des créatures -->
+    <item
+        android:id="@+id/action_ouvrir_creatures"
+        android:icon="@drawable/chest"
+        android:title="Créatures"
+        app:showAsAction="always" />
+
+
+    <!-- Scanner un code barre -->
+    <item
+        android:id="@+id/action_scanner"
+        android:icon="@drawable/scan"
+        android:title="Scanner"
+        app:showAsAction="always" />
+
+</menu>

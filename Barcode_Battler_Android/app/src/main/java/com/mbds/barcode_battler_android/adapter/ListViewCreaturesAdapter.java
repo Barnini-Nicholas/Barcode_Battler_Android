@@ -1,31 +1,86 @@
-package com.mbds.barcode_battler_android;
+package com.mbds.barcode_battler_android.adapter;
 
+import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Joueur;
+import com.mbds.barcode_battler_android.R;
 
-public class ListCreatureActivity extends AppCompatActivity implements ListAdapter {
+/**
+ * Created by Karl on 26/10/2017.
+ */
 
-    View returnView;
+public class ListViewCreaturesAdapter implements ListAdapter {
+
+    private LayoutInflater mInflater;
+
+    public ListViewCreaturesAdapter(Context creaturesFragment) {
+        mInflater = LayoutInflater.from(creaturesFragment);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_creature);
+    public int getCount() {
+        return Joueur.getInstance().getListCreatures().size();
+    }
 
-        ListView lv = (ListView) findViewById(R.id.listViewCreature);
-        lv.setAdapter(this);
+    @Override
+    public Object getItem(int position) {
+        return Joueur.getInstance().getListCreatures().get(position);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View returnView = mInflater.inflate(R.layout.item_list_creatures, null);
+        Creature c = Joueur.getInstance().getListCreatures().get(position);
+
+        TextView txNom = (TextView) returnView.findViewById(R.id.textCreatureNom);
+        txNom.setText(c.getNomEtTitre());
+
+        LinearLayout layoutRarete = (LinearLayout) returnView.findViewById(R.id.rarity);
+        for (int i = 0; i < c.getRarete(); i++) {
+
+            View to_add = mInflater.inflate(R.layout.rarety_star,
+                    layoutRarete, false);
+
+            layoutRarete.addView(to_add);
+        }
+
+        TextView txPV = (TextView) returnView.findViewById(R.id.textCreaturePV);
+        txPV.setText("" + c.getPV());
+
+        TextView txPA = (TextView) returnView.findViewById(R.id.textCreaturePA);
+        txPA.setText("" + c.getPA());
+
+        TextView txPB = (TextView) returnView.findViewById(R.id.textCreaturePB);
+        txPB.setText("" + c.getPB());
+
+        ImageView imageRace = (ImageView) returnView.findViewById(R.id.image_race);
+        imageRace.setImageResource(mInflater.getContext().getResources().getIdentifier(c.getRace().toLowerCase().replaceAll("é", "e"), "drawable",
+                MainActivity.getAppContext().getPackageName()));
+
+        returnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mInflater.getContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return returnView;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return Joueur.getInstance().getListCreatures().isEmpty();
     }
 
     @Override
@@ -48,15 +103,6 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
 
     }
 
-    @Override
-    public int getCount() {
-        return Joueur.getInstance().getListCreatures().size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return Joueur.getInstance().getListCreatures().get(position);
-    }
 
     @Override
     public long getItemId(int position) {
@@ -68,46 +114,6 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
         return true;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        returnView = View.inflate(this, R.layout.layout_bouton_list_creature, null);
-        Creature c = Joueur.getInstance().getListCreatures().get(position);
-
-        TextView txNom = (TextView) returnView.findViewById(R.id.textCreatureNom);
-        txNom.setText(c.getNomEtTitre());
-
-        LinearLayout layoutRarete = (LinearLayout) returnView.findViewById(R.id.rarity);
-        for (int i = 0; i < c.getRarete(); i++) {
-
-            View to_add = getLayoutInflater().inflate(R.layout.rarety_star,
-                    layoutRarete, false);
-
-            layoutRarete.addView(to_add);
-        }
-
-        TextView txPV = (TextView) returnView.findViewById(R.id.textCreaturePV);
-        txPV.setText("" + c.getPV());
-
-        TextView txPA = (TextView) returnView.findViewById(R.id.textCreaturePA);
-        txPA.setText("" + c.getPA());
-
-        TextView txPB = (TextView) returnView.findViewById(R.id.textCreaturePB);
-        txPB.setText("" + c.getPB());
-
-        ImageView imageRace = (ImageView) returnView.findViewById(R.id.image_race);
-        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(c.getRace().toLowerCase().replaceAll("é","e"), "drawable",
-                MainActivity.getAppContext().getPackageName()));
-
-        returnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return returnView;
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -119,8 +125,4 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
         return 1;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return Joueur.getInstance().getListCreatures().isEmpty();
-    }
 }

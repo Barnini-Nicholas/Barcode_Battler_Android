@@ -130,4 +130,34 @@
 
 
     </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/garder_equipement"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_add_remove"
+            android:textColor="#FFFF"
+            android:text="Garder" />
+
+        <Button
+            android:id="@+id/jeter_equipement"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_add_remove"
+            android:textColor="#FFFF"
+            android:text="Jeter" />
+
+
+    </LinearLayout>
 </LinearLayout>

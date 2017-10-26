@@ -1,24 +1,28 @@
-package com.mbds.barcode_battler_android;
+package com.mbds.barcode_battler_android.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Joueur;
-import com.mbds.barcode_battler_android.Service.TagLog;
+import com.mbds.barcode_battler_android.R;
 
 /**
  * Created by Karl on 25/10/2017.
  */
 
-public class AffichageCreatureActivity extends AppCompatActivity {
+public class CreatureScanFragment extends Fragment {
 
     private Creature creature;
 
@@ -34,59 +38,68 @@ public class AffichageCreatureActivity extends AppCompatActivity {
     private Button btnJeterCreature;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.affichage_creature);
 
-        creature = getIntent().getExtras().getParcelable("creature");
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.affichage_creature, container, false);
+
+        Bundle args = getArguments();
+
+        creature = args.getParcelable("creature");
         Log.i("DEBUG", creature.toString());
 
-        textNom = (TextView) findViewById(R.id.nom_creature);
+        textNom = (TextView) view.findViewById(R.id.nom_creature);
         textNom.setText(creature.getNomEtTitre());
 
-        textRace = (TextView) findViewById(R.id.race_creature);
+        textRace = (TextView) view.findViewById(R.id.race_creature);
         textRace.setText(creature.getRace());
 
-        imageRace = (ImageView) findViewById(R.id.image_race);
+        imageRace = (ImageView) view.findViewById(R.id.image_race);
         imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(creature.getRace().toLowerCase().replaceAll("é", "e"), "drawable",
                 MainActivity.getAppContext().getPackageName()));
 
-        layoutRarete = (LinearLayout) findViewById(R.id.rarity);
+        layoutRarete = (LinearLayout) view.findViewById(R.id.rarity);
         for (int i = 0; i < creature.getRarete(); i++) {
 
-            View to_add = getLayoutInflater().inflate(R.layout.rarety_star,
+            View to_add = LayoutInflater.from(getContext()).inflate(R.layout.rarety_star,
                     layoutRarete, false);
 
             layoutRarete.addView(to_add);
         }
-        textPV = (TextView) findViewById(R.id.pv_creature);
+        textPV = (TextView) view.findViewById(R.id.pv_creature);
         textPV.setText(creature.getPV() + "");
 
-        textPA = (TextView) findViewById(R.id.pa_creature);
+        textPA = (TextView) view.findViewById(R.id.pa_creature);
         textPA.setText(creature.getPA() + "");
 
-        textPB = (TextView) findViewById(R.id.pb_creature);
+        textPB = (TextView) view.findViewById(R.id.pb_creature);
         textPB.setText(creature.getPB() + "");
 
-        btnAddCreature = (Button) findViewById(R.id.garder_creature);
+        btnAddCreature = (Button) view.findViewById(R.id.garder_creature);
         btnAddCreature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Joueur.getInstance().addCreature(creature);
-                Toast.makeText(getApplicationContext(), "'"+creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getContext(), "'" + creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
+
             }
         });
 
-        btnJeterCreature = (Button) findViewById(R.id.jeter_creature);
+        btnJeterCreature = (Button) view.findViewById(R.id.jeter_creature);
         btnJeterCreature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Adieu '"+creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
+
             }
         });
 
+        return view;
     }
+
+
+
 }

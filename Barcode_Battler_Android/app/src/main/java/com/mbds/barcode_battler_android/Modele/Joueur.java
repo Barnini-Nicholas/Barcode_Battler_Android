@@ -28,7 +28,10 @@ public class Joueur {
         // listCreatures.add(new Creature("Karl","","",10, 7, 3));
         // listCreatures.add(new Creature("Nicholas","","",10, 3, 7));
 
-        listEquipements = new ArrayList<>();
+        listEquipements = BDD.getInstance().getEquipement();
+        if (listEquipements == null) {
+            listEquipements = new ArrayList<>();
+        }
     }
 
     public void addCreature(Creature creature) {
@@ -38,5 +41,14 @@ public class Joueur {
 
     public ArrayList<Creature> getListCreatures() {
         return listCreatures;
+    }
+
+    public void addEquipement(Equipement equipement) {
+        BDD.getInstance().addEquipement(equipement);
+        listEquipements = BDD.getInstance().getEquipement();
+    }
+
+    public ArrayList<Equipement> getListEquipement() {
+        return listEquipements;
     }
 }
