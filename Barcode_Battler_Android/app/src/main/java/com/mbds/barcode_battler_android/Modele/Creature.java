@@ -28,9 +28,11 @@ public class Creature implements Parcelable {
     // Point de Bouclier
     private int PB;
 
+    private String codeBarreUtilise;
+
     private ArrayList<Equipement> listEquipement;
 
-    public Creature(String nom, String titre, String race, int pv, int pa, int pb) {
+    public Creature(String nom, String titre, String race, int pv, int pa, int pb, String codeBarreUtilise) {
         this.setNom(nom);
         this.setTitre(titre);
         this.setRace(race);
@@ -38,6 +40,7 @@ public class Creature implements Parcelable {
         this.setPA(pa);
         this.setPB(pb);
         this.setListEquipement(new ArrayList<Equipement>());
+        this.setCodeBarreUtilise(codeBarreUtilise);
     }
 
     // Parcelling part
@@ -152,6 +155,14 @@ public class Creature implements Parcelable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public String getCodeBarreUtilise() {
+        return codeBarreUtilise;
+    }
+
+    public void setCodeBarreUtilise(String hashUtilise) {
+        this.codeBarreUtilise = hashUtilise;
     }
 
     @Override

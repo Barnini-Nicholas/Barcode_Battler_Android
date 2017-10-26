@@ -31,10 +31,12 @@ public class BDD extends SQLiteOpenHelper {
     private static final String bonusPV = "BONUSPV";
     private static final String bonusPA = "BONUSPA";
     private static final String bonusPB = "BONUSPB";
+    private static final String CODE_BARRE_EQUIPEMENT = "codeBarreUtilise";
 
     private static final String CREATE_EQUIPEMENT = "CREATE TABLE " + TABLE_EQUIPEMENT + " ("
             + COL_ID_EQUIPEMENT + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_EQUIPEMENT + " TEXT NOT NULL, "
-            + bonusPV + " INTEGER NOT NULL, " + bonusPA + " INTEGER NOT NULL, " + bonusPB + " INTEGER NOT NULL);";
+            + bonusPV + " INTEGER NOT NULL, " + bonusPA + " INTEGER NOT NULL, " + bonusPB + " INTEGER NOT NULL, "
+            + CODE_BARRE_EQUIPEMENT + " TEXT NOT NULL);";
 
     // TABLE CREATURE
 
@@ -46,10 +48,13 @@ public class BDD extends SQLiteOpenHelper {
     private static final String PV = "PV";
     private static final String PA = "PA";
     private static final String PB = "PB";
+    private static final String CODE_BARRE_CREATURE = "codeBarreUtilise";
 
     private static final String CREATE_CREATURE = "CREATE TABLE " + TABLE_CREATURE + " ("
-            + COL_ID_CREATURE + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_CREATURE + " TEXT NOT NULL, " + TITRE + " TEXT NOT NULL, " + RACE + " TEXT NOT NULL, "
-            + PV + " INTEGER NOT NULL, " + PA + " INTEGER NOT NULL, " + PB + " INTEGER NOT NULL);";
+            + COL_ID_CREATURE + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOM_CREATURE + " TEXT NOT NULL, "
+            + TITRE + " TEXT NOT NULL, " + RACE + " TEXT NOT NULL, "
+            + PV + " INTEGER NOT NULL, " + PA + " INTEGER NOT NULL, "
+            + PB + " INTEGER NOT NULL, " + CODE_BARRE_CREATURE + " TEXT NOT NULL);";
 
     public static BDD getInstance() {
         return ourInstance;
@@ -101,6 +106,7 @@ public class BDD extends SQLiteOpenHelper {
         values.put(PV, c.getPV());
         values.put(PA, c.getPA());
         values.put(PB, c.getPB());
+        values.put(CODE_BARRE_CREATURE, c.getCodeBarreUtilise());
         db.insert(TABLE_CREATURE, null, values);
         db.close();
     }
@@ -108,7 +114,7 @@ public class BDD extends SQLiteOpenHelper {
     public ArrayList<Creature> getCreature() {
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         //Récupère dans un Cursor les valeurs correspondant à une créature contenu dans la BDD
-        Cursor c = db.query(TABLE_CREATURE, new String[]{COL_ID_CREATURE, NOM_CREATURE, TITRE, RACE, PV, PA, PB}, null, null, null, null, null);
+        Cursor c = db.query(TABLE_CREATURE, new String[]{COL_ID_CREATURE, NOM_CREATURE, TITRE, RACE, PV, PA, PB, CODE_BARRE_CREATURE}, null, null, null, null, null);
         return cursorToCreature(c);
     }
 
@@ -128,7 +134,7 @@ public class BDD extends SQLiteOpenHelper {
 
         for (int i = 0; i < c.getCount(); i++) {
 
-            listCret.add(new Creature(c.getString(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5), c.getInt(6)));
+            listCret.add(new Creature(c.getString(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5), c.getInt(6), c.getString(7)));
 
             c.moveToNext();
         }
@@ -151,6 +157,7 @@ public class BDD extends SQLiteOpenHelper {
         values.put(bonusPV, e.getBonusPV());
         values.put(bonusPA, e.getBonusPA());
         values.put(bonusPB, e.getBonusPB());
+        values.put(CODE_BARRE_EQUIPEMENT, e.getCodeBarreUtilise());
         db.insert(TABLE_EQUIPEMENT, null, values);
         db.close();
     }
@@ -158,7 +165,7 @@ public class BDD extends SQLiteOpenHelper {
     public ArrayList<Equipement> getEquipement() {
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         //Récupère dans un Cursor les valeurs correspondant à un livre contenu dans la BDD (ici on sélectionne le livre grâce à son titre)
-        Cursor c = db.query(TABLE_EQUIPEMENT, new String[]{COL_ID_EQUIPEMENT, NOM_EQUIPEMENT, bonusPV, bonusPA, bonusPB}, null, null, null, null, null);
+        Cursor c = db.query(TABLE_EQUIPEMENT, new String[]{COL_ID_EQUIPEMENT, NOM_EQUIPEMENT, bonusPV, bonusPA, bonusPB, CODE_BARRE_EQUIPEMENT}, null, null, null, null, null);
         return cursorToEquipement(c);
     }
 
@@ -178,7 +185,7 @@ public class BDD extends SQLiteOpenHelper {
 
         for (int i = 0; i < c.getCount(); i++) {
 
-            listEquip.add(new Equipement(c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4)));
+            listEquip.add(new Equipement(c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getString(5)));
 
             c.moveToNext();
         }
