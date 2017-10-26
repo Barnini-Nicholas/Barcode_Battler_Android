@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="race_creature_array">
-        <item>Humain</item>
+        <item>Geth</item>
         <item>Asari</item>
         <item>Turien</item>
         <item>Quarien</item>
         <item>Krogan</item>
-        <item>Geth</item>
+        <item>Humain</item>
         <item>Drell</item>
         <item>Butarien</item>
         <item>Angara</item>
