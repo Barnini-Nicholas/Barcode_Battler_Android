@@ -26,6 +26,10 @@ public class Equipement implements Parcelable {
 
     }
 
+    public int getRarete() {
+        return ((bonusPV + bonusPA + bonusPB) / 10) + 1;
+    }
+
     // Parcelling part
     public Equipement(Parcel in) {
         String[] data = new String[4];

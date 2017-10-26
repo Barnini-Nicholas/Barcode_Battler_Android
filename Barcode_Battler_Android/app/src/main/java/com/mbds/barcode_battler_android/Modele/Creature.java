@@ -73,6 +73,10 @@ public class Creature implements Parcelable {
 
     }
 
+    public int getRarete() {
+        return ((PV + PA + PB) / 10) + 1;
+    }
+
     @Override
     public int describeContents() {
         return 0;

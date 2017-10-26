@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".ListCreatureActivity" />
         <activity android:name=".AffichageCreatureActivity" />
+        <activity android:name=".AffichageEquipementActivity" />
         <activity android:name=".CombatActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>

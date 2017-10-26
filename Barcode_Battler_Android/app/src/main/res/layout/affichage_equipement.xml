@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_margin="10dp"
-        android:text="Vous avez trouvé une créature :"
+        android:gravity="center"
+        android:text="Vous avez trouvé un équipement :"
         android:textColor="#000000"
         android:textSize="25dp" />
 
@@ -19,30 +19,21 @@
         android:id="@+id/image_race"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:scaleType="centerInside"
-        android:src="@drawable/drell" />
+        android:src="@drawable/equipement" />
 
 
     <TextView
-        android:id="@+id/nom_creature"
+        android:id="@+id/nom_equipement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:text="Nom"
         android:textColor="#000000"
         android:textSize="25dp" />
-
-
-    <TextView
-        android:id="@+id/race_creature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Race"
-        android:textColor="#000000"
-        android:textSize="18dp" />
-
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rarity"
@@ -55,8 +46,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="30dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -75,7 +66,7 @@
                 android:src="@drawable/pv" />
 
             <TextView
-                android:id="@+id/pv_creature"
+                android:id="@+id/pv_equipement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -101,7 +92,7 @@
                 android:src="@drawable/pa" />
 
             <TextView
-                android:id="@+id/pa_creature"
+                android:id="@+id/pa_equipement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -127,7 +118,7 @@
                 android:src="@drawable/pb" />
 
             <TextView
-                android:id="@+id/pb_creature"
+                android:id="@+id/pb_equipement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

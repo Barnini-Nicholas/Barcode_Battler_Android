@@ -102,13 +102,18 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, AffichageCreatureActivity.class);
                 intent.putExtra("creature", creature);
-
                 startActivity(intent);
+
                 break;
 
             case EQUIPEMENT:
                 Equipement equipement = (Equipement) data.getExtras().getParcelable("butin");
                 Log.i(TagLog.HASH_EQUIPEMENT, equipement.toString());
+
+                Intent intent2 = new Intent(MainActivity.this, AffichageEquipementActivity.class);
+                intent2.putExtra("equipement", equipement);
+                startActivity(intent2);
+                
                 break;
         }
     }
