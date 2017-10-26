@@ -31,6 +31,7 @@ public class AffichageCreatureActivity extends AppCompatActivity {
     private TextView textPB;
 
     private Button btnAddCreature;
+    private Button btnJeterCreature;
 
 
     @Override
@@ -78,6 +79,14 @@ public class AffichageCreatureActivity extends AppCompatActivity {
             }
         });
 
+        btnJeterCreature = (Button) findViewById(R.id.jeter_creature);
+        btnJeterCreature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Adieu '"+creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
 
     }
 }
