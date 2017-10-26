@@ -8,6 +8,7 @@ import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +82,8 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         // record 0 contains the MIME type, record 1 is the AAR, if present
-        textView.setText(new String(msg.getRecords()[0].getPayload()));
+        textView.setText("J'AVAIS RAISON HEHE");
+
+        Log.v("NFC", "KARL T MAD A KOSE DU ENEFCCCCCCC");
     }
 }

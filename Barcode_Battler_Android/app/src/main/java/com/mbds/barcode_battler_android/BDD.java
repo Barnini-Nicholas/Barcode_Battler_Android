@@ -24,6 +24,8 @@ public class BDD extends SQLiteOpenHelper {
 
     private static final BDD ourInstance = new BDD();
 
+    ///////////////////////////
+
     // TABLE EQUIPEMENT
 
     private static final String TABLE_EQUIPEMENT = "table_EQUIPEMENT";
@@ -57,6 +59,19 @@ public class BDD extends SQLiteOpenHelper {
             + PV + " INTEGER NOT NULL, " + PA + " INTEGER NOT NULL, "
             + PB + " INTEGER NOT NULL, " + CODE_BARRE_CREATURE + " TEXT NOT NULL);";
 
+    // TABLE EQUIPER
+
+    private static final String TABLE_EQUIPER = "table_EQUIPER";
+    private static final String ID_CREATURE = "ID_CREATURE";
+    private static final String ID_EQUIPEMENT = "ID_EQUIPEMENT";
+
+    private static final String CREATE_EQUIPER = "CREATE TABLE " + TABLE_EQUIPER + " ("
+            + ID_CREATURE + " INTEGER NOT NULL, " + ID_EQUIPEMENT + " INTEGER NOT NULL, "
+            + "PRIMARY KEY (" + ID_CREATURE + ", " + ID_EQUIPEMENT + "));";
+
+    ///////////////////////////
+
+
     public static BDD getInstance() {
         return ourInstance;
     }
@@ -69,12 +84,14 @@ public class BDD extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CREATURE);
         db.execSQL(CREATE_EQUIPEMENT);
+        db.execSQL(CREATE_EQUIPER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
         db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
+        db.execSQL("DROP TABLE " + TABLE_EQUIPER + ";");
         onCreate(db);
     }
 
