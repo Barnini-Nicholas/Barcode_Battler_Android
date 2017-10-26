@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnScan;
     Button btnListCreature;
+    Button btnCombat;
 
     private static Context context;
 
@@ -68,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListCreatureActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btnCombat = (Button) findViewById(R.id.btnCombat);
+        btnCombat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CombatActivity.class);
                 startActivity(intent);
             }
         });
