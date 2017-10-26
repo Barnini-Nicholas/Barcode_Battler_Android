@@ -17,12 +17,15 @@ public class Equipement implements Parcelable {
     private int bonusPA;
     private int bonusPB;
 
+    private String codeBarreUtilise;
 
-    public Equipement(String nom, int bonusPV, int bonusPA, int bonusPB) {
+
+    public Equipement(String nom, int bonusPV, int bonusPA, int bonusPB, String codeBarreUtilise) {
         this.setNom(nom);
         this.setBonusPV(bonusPV);
         this.setBonusPA(bonusPA);
         this.setBonusPB(bonusPB);
+        this.setCodeBarreUtilise(codeBarreUtilise);
 
     }
 
@@ -98,6 +101,14 @@ public class Equipement implements Parcelable {
 
     public int getId() {
         return id;
+    }
+
+    public String getCodeBarreUtilise() {
+        return codeBarreUtilise;
+    }
+
+    public void setCodeBarreUtilise(String codeBarreUtilise) {
+        this.codeBarreUtilise = codeBarreUtilise;
     }
 
     public void setId(int id) {
