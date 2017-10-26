@@ -8,13 +8,13 @@
     tools:context="com.mbds.barcode_battler_android.ListCreatureActivity">
 
     <ListView
+        android:id="@+id/listViewCreature"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewCreature"
-        android:divider="@android:color/transparent"
+        android:divider="@android:color/darker_gray"
         android:dividerHeight="20.0sp"
         android:padding="16dip"
 
-    />
+        />
 
 </LinearLayout>

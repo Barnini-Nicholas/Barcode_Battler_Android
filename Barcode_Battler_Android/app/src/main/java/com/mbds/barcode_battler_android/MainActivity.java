@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
@@ -98,7 +99,14 @@ public class MainActivity extends AppCompatActivity {
             case CREATURE:
                 Creature creature = (Creature) data.getExtras().getParcelable("butin");
                 Log.i(TagLog.HASH_CREATURE, creature.toString());
-                Joueur.getInstance().addCreature(creature);
+
+                // Controle pour voir si la créature a déja été scanné :
+                for (Creature c : Joueur.getInstance().getListCreatures()) {
+                    if (creature.getCodeBarreUtilise().equals(c.getCodeBarreUtilise())) {
+                        Toast.makeText(getApplicationContext(), "Déja scanné tricheur", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
                 Intent intent = new Intent(MainActivity.this, AffichageCreatureActivity.class);
                 intent.putExtra("creature", creature);
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(MainActivity.this, AffichageEquipementActivity.class);
                 intent2.putExtra("equipement", equipement);
                 startActivity(intent2);
-                
+
                 break;
         }
     }
