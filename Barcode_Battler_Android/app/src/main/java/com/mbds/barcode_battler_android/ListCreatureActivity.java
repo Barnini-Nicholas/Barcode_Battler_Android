@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -75,14 +77,27 @@ public class ListCreatureActivity extends AppCompatActivity implements ListAdapt
         TextView txNom = (TextView) returnView.findViewById(R.id.textCreatureNom);
         txNom.setText(c.getNomEtTitre());
 
+        LinearLayout layoutRarete = (LinearLayout) returnView.findViewById(R.id.rarity);
+        for (int i = 0; i < c.getRarete(); i++) {
+
+            View to_add = getLayoutInflater().inflate(R.layout.rarety_star,
+                    layoutRarete, false);
+
+            layoutRarete.addView(to_add);
+        }
+
         TextView txPV = (TextView) returnView.findViewById(R.id.textCreaturePV);
-        txPV.setText(" PV : " + c.getPV());
+        txPV.setText("" + c.getPV());
 
         TextView txPA = (TextView) returnView.findViewById(R.id.textCreaturePA);
-        txPA.setText(" PA : " + c.getPA());
+        txPA.setText("" + c.getPA());
 
         TextView txPB = (TextView) returnView.findViewById(R.id.textCreaturePB);
-        txPB.setText(" PB : " + c.getPB());
+        txPB.setText("" + c.getPB());
+
+        ImageView imageRace = (ImageView) returnView.findViewById(R.id.image_race);
+        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(c.getRace().toLowerCase().replaceAll("é","e"), "drawable",
+                MainActivity.getAppContext().getPackageName()));
 
         returnView.setOnClickListener(new View.OnClickListener() {
             @Override

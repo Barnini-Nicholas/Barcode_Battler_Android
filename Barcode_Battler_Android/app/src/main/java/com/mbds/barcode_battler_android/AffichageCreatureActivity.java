@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
 /**
@@ -16,6 +19,8 @@ import com.mbds.barcode_battler_android.Service.TagLog;
  */
 
 public class AffichageCreatureActivity extends AppCompatActivity {
+
+    private Creature creature;
 
     private TextView textNom;
     private TextView textRace;
@@ -25,13 +30,15 @@ public class AffichageCreatureActivity extends AppCompatActivity {
     private TextView textPA;
     private TextView textPB;
 
+    private Button btnAddCreature;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.affichage_creature);
 
-        Creature creature = getIntent().getExtras().getParcelable("creature");
+        creature = getIntent().getExtras().getParcelable("creature");
         Log.i("DEBUG", creature.toString());
 
         textNom = (TextView) findViewById(R.id.nom_creature);
@@ -41,7 +48,7 @@ public class AffichageCreatureActivity extends AppCompatActivity {
         textRace.setText(creature.getRace());
 
         imageRace = (ImageView) findViewById(R.id.image_race);
-        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(creature.getRace().toLowerCase().replaceAll("é","e"), "drawable",
+        imageRace.setImageResource(MainActivity.getAppContext().getResources().getIdentifier(creature.getRace().toLowerCase().replaceAll("é", "e"), "drawable",
                 MainActivity.getAppContext().getPackageName()));
 
         layoutRarete = (LinearLayout) findViewById(R.id.rarity);
@@ -60,6 +67,17 @@ public class AffichageCreatureActivity extends AppCompatActivity {
 
         textPB = (TextView) findViewById(R.id.pb_creature);
         textPB.setText(creature.getPB() + "");
+
+        btnAddCreature = (Button) findViewById(R.id.garder_creature);
+        btnAddCreature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Joueur.getInstance().addCreature(creature);
+                Toast.makeText(getApplicationContext(), "'"+creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
 
     }
 }

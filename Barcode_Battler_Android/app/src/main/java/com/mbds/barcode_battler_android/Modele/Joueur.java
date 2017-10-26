@@ -21,6 +21,9 @@ public class Joueur {
 
     private Joueur() {
         listCreatures = BDD.getInstance().getCreature();
+        if (listCreatures == null) {
+            listCreatures = new ArrayList<>();
+        }
         // listCreatures.add(new Creature("Pierre","Le Paysan","",10, 5, 5));
         // listCreatures.add(new Creature("Karl","","",10, 7, 3));
         // listCreatures.add(new Creature("Nicholas","","",10, 3, 7));
