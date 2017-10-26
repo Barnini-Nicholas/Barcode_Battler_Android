@@ -77,45 +77,83 @@ public class BDD extends SQLiteOpenHelper {
     }
 
     private BDD() {
-        super(MainActivity.getAppContext(), "database_File.db", null, DB_VERSION);
+        super(MainActivity.getAppContext(), "database_Filev2.db", null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        Log.v(TagLog.BD, "CREATION de la table :" + TABLE_CREATURE);
         db.execSQL(CREATE_CREATURE);
+        Log.v(TagLog.BD, "CREATION de la table :" + TABLE_EQUIPEMENT);
         db.execSQL(CREATE_EQUIPEMENT);
+        Log.v(TagLog.BD, "CREATION de la table :" + TABLE_EQUIPER);
         db.execSQL(CREATE_EQUIPER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
         db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
         db.execSQL("DROP TABLE " + TABLE_EQUIPER + ";");
         onCreate(db);
     }
 
-    public void deleteAllTables() {
-
+    public void addEquipementToCreature(Creature c, Equipement e) {
+        Log.v(TagLog.BD_EQUIPER, "INSERT d'un équipement(" + e + ") sur une créature(" + c + ") : ");
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
-
-        if (BDD.getInstance().getEquipement() != null) {
-            db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
-        }
-
-        if (BDD.getInstance().getCreature() != null) {
-            db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
-        }
+        ContentValues values = new ContentValues();
+        values.put(ID_CREATURE, c.getId());
+        values.put(ID_EQUIPEMENT, e.getId());
+        db.insert(TABLE_EQUIPER, null, values);
+        db.close();
     }
 
-    public void createTablesAgain() {
+    public ArrayList<Equipement> getEquipementsOfCreature(int id_Creature) {
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
-        db.execSQL(CREATE_CREATURE);
-        db.execSQL(CREATE_EQUIPEMENT);
+        //Récupère dans un Cursor les valeurs correspondant à une créature contenu dans la BDD
+        String requete = "SELECT "+ TABLE_EQUIPEMENT +".* FROM " + TABLE_EQUIPER + ", " + TABLE_EQUIPEMENT
+                + " WHERE " + TABLE_EQUIPEMENT + "." + COL_ID_EQUIPEMENT + " = " + TABLE_EQUIPER + "." + ID_EQUIPEMENT
+                + " AND " + TABLE_EQUIPER + "." + ID_CREATURE + " = ?";
+        Log.v(TagLog.BD_EQUIPER, "Requete : " + requete);
+        Cursor c = db.rawQuery(requete, new String[]{id_Creature +""});
+        return cursorToEquiper(c, id_Creature);
+    }
+
+    private ArrayList<Equipement> cursorToEquiper(Cursor c, int id_Creature) {
+
+        Log.v(TagLog.BD_EQUIPER, "DEBUT de la récupération des équipements de la créature (" + id_Creature + ").");
+
+        //si aucun élément n'a été retourné dans la requête, on renvoie null
+        if (c.getCount() == 0)
+            return null;
+
+        ArrayList<Equipement> listEquip = new ArrayList<Equipement>();
+
+        //Sinon on se place sur le premier élément
+        c.moveToFirst();
+
+        for (int i = 0; i < c.getCount(); i++) {
+
+            Log.v("CURSOR", c.toString());
+            Equipement e = new Equipement(c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getString(5));
+            e.setId(c.getInt(0));
+            listEquip.add(e);
+
+            c.moveToNext();
+        }
+        //on lui affecte toutes les infos grâce aux infos contenues dans le Cursor
+
+        //On ferme le cursor
+        c.close();
+
+        Log.v(TagLog.BD_EQUIPER, "FIN de la récupération des équipements de la créature (" + id_Creature + ").");
+        return listEquip;
     }
 
     public void addCreature(Creature c) {
-        Log.v(TagLog.BD_CREATURE, "Insert d'un équipement : " + c);
+        Log.v(TagLog.BD_CREATURE, "INSERT d'un équipement : " + c);
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NOM_CREATURE, c.getNom());
@@ -139,7 +177,7 @@ public class BDD extends SQLiteOpenHelper {
     //Cette méthode permet de convertir un cursor sur une créature
     private ArrayList<Creature> cursorToCreature(Cursor c) {
 
-        Log.v(TagLog.BD_CREATURE, "Début d'un getAll sur Equipement");
+        Log.v(TagLog.BD_CREATURE, "DEBUT d'un getAll sur Equipement");
 
         //si aucun élément n'a été retourné dans la requête, on renvoie null
         if (c.getCount() == 0)
@@ -152,7 +190,9 @@ public class BDD extends SQLiteOpenHelper {
 
         for (int i = 0; i < c.getCount(); i++) {
 
-            listCret.add(new Creature(c.getString(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5), c.getInt(6), c.getString(7)));
+            Creature creature = new Creature(c.getString(1), c.getString(2), c.getString(3), c.getInt(4), c.getInt(5), c.getInt(6), c.getString(7));
+            creature.setId(c.getInt(0));
+            listCret.add(creature);
 
             c.moveToNext();
         }
@@ -161,14 +201,14 @@ public class BDD extends SQLiteOpenHelper {
         //On ferme le cursor
         c.close();
 
-        Log.v(TagLog.BD_CREATURE, "Fin d'un getAll : " + listCret);
+        Log.v(TagLog.BD_CREATURE, "FIN d'un getAll : " + listCret);
 
         //On retourne la créature
         return listCret;
     }
 
     public void addEquipement(Equipement e) {
-        Log.v(TagLog.BD_EQUIPEMENT, "Insert d'un équipement : " + e);
+        Log.v(TagLog.BD_EQUIPEMENT, "INSERT d'un équipement : " + e);
         SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NOM_EQUIPEMENT, e.getNom());
@@ -190,7 +230,7 @@ public class BDD extends SQLiteOpenHelper {
     //Cette méthode permet de convertir un cursor sur un équipement
     private ArrayList<Equipement> cursorToEquipement(Cursor c) {
 
-        Log.v(TagLog.BD_EQUIPEMENT, "Début d'un getAll sur Equipement");
+        Log.v(TagLog.BD_EQUIPEMENT, "DEBUT d'un getAll sur Equipement");
 
         //si aucun élément n'a été retourné dans la requête, on renvoie null
         if (c.getCount() == 0)
@@ -203,7 +243,9 @@ public class BDD extends SQLiteOpenHelper {
 
         for (int i = 0; i < c.getCount(); i++) {
 
-            listEquip.add(new Equipement(c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getString(5)));
+            Equipement e = new Equipement(c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4), c.getString(5));
+            e.setId(c.getInt(0));
+            listEquip.add(e);
 
             c.moveToNext();
         }
@@ -212,9 +254,28 @@ public class BDD extends SQLiteOpenHelper {
         //On ferme le cursor
         c.close();
 
-        Log.v(TagLog.BD_EQUIPEMENT, "Fin d'un getAll : " + listEquip);
+        Log.v(TagLog.BD_EQUIPEMENT, "FIN d'un getAll : " + listEquip);
 
         //On retourne le l'equipement
         return listEquip;
+    }
+
+    public void deleteAllTables() {
+
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
+
+        if (BDD.getInstance().getEquipement() != null) {
+            db.execSQL("DROP TABLE " + TABLE_EQUIPEMENT + ";");
+        }
+
+        if (BDD.getInstance().getCreature() != null) {
+            db.execSQL("DROP TABLE " + TABLE_CREATURE + ";");
+        }
+    }
+
+    public void createTablesAgain() {
+        SQLiteDatabase db = BDD.getInstance().getWritableDatabase();
+        db.execSQL(CREATE_CREATURE);
+        db.execSQL(CREATE_EQUIPEMENT);
     }
 }

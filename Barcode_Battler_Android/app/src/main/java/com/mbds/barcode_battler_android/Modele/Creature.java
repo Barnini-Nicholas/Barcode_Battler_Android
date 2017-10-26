@@ -15,6 +15,7 @@ import java.util.Random;
 
 public class Creature implements Parcelable {
 
+    private int id;
     private String nom;
     private String titre;
     private String race;
@@ -170,9 +171,18 @@ public class Creature implements Parcelable {
         this.codeBarreUtilise = hashUtilise;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Creature{" +
+                "id='" + id + '\'' +
                 "nom='" + nom + '\'' +
                 ", titre='" + titre + '\'' +
                 ", race='" + race + '\'' +

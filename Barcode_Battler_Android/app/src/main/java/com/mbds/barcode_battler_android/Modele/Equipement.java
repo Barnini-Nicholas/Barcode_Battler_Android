@@ -118,6 +118,7 @@ public class Equipement implements Parcelable {
     @Override
     public String toString() {
         return "Equipement{" +
+                "id='" + id + '\'' +
                 "nom='" + nom + '\'' +
                 ", bonusPV=" + bonusPV +
                 ", bonusPA=" + bonusPA +
