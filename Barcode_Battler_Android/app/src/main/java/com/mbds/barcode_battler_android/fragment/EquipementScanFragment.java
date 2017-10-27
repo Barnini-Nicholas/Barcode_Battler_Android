@@ -38,7 +38,7 @@ public class EquipementScanFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.affichage_equipement, container, false);
+        View view = inflater.inflate(R.layout.affichage_scan_equipement, container, false);
 
         Log.i("DEBUG", equipement.toString());
 

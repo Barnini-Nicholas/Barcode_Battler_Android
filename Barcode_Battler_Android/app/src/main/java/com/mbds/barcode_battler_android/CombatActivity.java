@@ -21,7 +21,7 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_combat);
+        setContentView(R.layout.affichage_combat);
 
         textView = (TextView) findViewById(R.id.textcombat);
 

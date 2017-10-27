@@ -42,7 +42,7 @@ public class CreatureScanFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.affichage_creature, container, false);
+        View view = inflater.inflate(R.layout.affichage_scan_creature, container, false);
 
         Log.i("DEBUG", creature.toString());
 
