@@ -14,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Service.Serializable_Service;
+
+import java.io.IOException;
 
 
 public class CombatActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback {
@@ -43,21 +46,29 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
 
+        // com.mbds.barcode_battler_android
+
         Creature c = new Creature("aNom", "aTitre", "aRace", 10, 10, 10, "aCode");
         String text = ("");
-        NdefMessage msg = new NdefMessage(
+        /*NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { NdefRecord.createMime(
                         "application/vnd.com.example.android.beam", text.getBytes())
-                        /**
-                         * The Android Application Record (AAR) is commented out. When a device
-                         * receives a push with an AAR in it, the application specified in the AAR
-                         * is guaranteed to run. The AAR overrides the tag dispatch system.
-                         * You can add it back in to guarantee that this
-                         * activity starts when receiving a beamed message. For now, this code
-                         * uses the tag dispatch system.
-                        */
+
                         //,NdefRecord.createApplicationRecord("com.example.android.beam")
                 });
+        */
+
+        NdefMessage msg = null;
+
+        try {
+            msg = new NdefMessage( new NdefRecord[] {
+                    NdefRecord.createExternal("com.mbds.barcode_battler_android", "externalType", Serializable_Service.serialize(c))
+            });
+        } catch (IOException e) {
+            System.err.println("ERREUR dans la serialisation de la créature : " + c);
+            e.printStackTrace();
+        }
+
         return msg;
     }
 
@@ -88,6 +99,15 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         // record 0 contains the MIME type, record 1 is the AAR, if present
         //textView.setText("J'AVAIS RAISON HEHE");
 
-        Log.v("NFCCCCCCCCCCCCCCCCCCCCC", new String(msg.getRecords()[0].getPayload()));
+        Creature c = null;
+        try {
+            c = (Creature) Serializable_Service.deserialize(msg.getRecords()[0].getPayload()) ;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("NFCCCCCCCCCCCCCCCCCCCCC", c.toString());
     }
 }

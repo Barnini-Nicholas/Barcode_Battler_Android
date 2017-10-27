@@ -6,6 +6,12 @@ import android.util.Log;
 
 import com.mbds.barcode_battler_android.Service.TagLog;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,7 +19,7 @@ import java.util.Random;
  * Created by barnini on 23/10/2017.
  */
 
-public class Creature implements Parcelable {
+public class Creature implements Parcelable, Serializable {
 
     private int id;
     private String nom;
@@ -191,4 +197,6 @@ public class Creature implements Parcelable {
                 ", PB=" + PB +
                 '}';
     }
+
+
 }
