@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
                 return true;
 
             case R.id.action_lancer_combat:
-                // lancerFragment(CombatFragment.class, true);
-                Intent intent = new Intent(this, CombatActivity.class);
-                startActivity(intent);
+                lancerFragment(CombatFragment.class, true);
+                // Intent intent = new Intent(this, CombatActivity.class);
+                // startActivity(intent);
 
                 Toast.makeText(getApplicationContext(), "La bagarre !", Toast.LENGTH_SHORT).show();
                 return true;
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         // Commit the transaction
         transaction.commit();
     }
-
 
     public static Context getAppContext() {
         return MainActivity.context;

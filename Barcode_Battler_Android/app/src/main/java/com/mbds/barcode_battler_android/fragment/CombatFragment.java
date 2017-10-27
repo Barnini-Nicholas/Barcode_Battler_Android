@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mbds.barcode_battler_android.Controleur.GestionCombat;
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.R;
@@ -62,6 +63,16 @@ public class CombatFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.image_combat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (creature1 != null && creature2 != null) {
+                    GestionCombat gestionCombat = new GestionCombat(creature1, creature2, getView());
+                    gestionCombat.commencerLaBagarre();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -101,6 +112,11 @@ public class CombatFragment extends Fragment {
             TextView txPV = (TextView) getView().findViewById(R.id.pv_creature_2);
             txPV.setText("" + creature2.getPV());
         }
+
+
+    }
+
+    private void commencerLaBagarre() {
     }
 
     public Creature getCreature1() {

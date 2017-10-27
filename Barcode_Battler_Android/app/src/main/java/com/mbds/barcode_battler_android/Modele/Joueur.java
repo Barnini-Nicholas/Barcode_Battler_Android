@@ -51,4 +51,8 @@ public class Joueur {
     public ArrayList<Equipement> getListEquipement() {
         return listEquipements;
     }
+
+    public void resetListCreatures() {
+        listCreatures = BDD.getInstance().getCreature();
+    }
 }
