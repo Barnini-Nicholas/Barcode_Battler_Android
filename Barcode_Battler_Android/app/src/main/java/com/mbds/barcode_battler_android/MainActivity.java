@@ -2,6 +2,7 @@ package com.mbds.barcode_battler_android;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -69,7 +70,10 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
                 return true;
 
             case R.id.action_lancer_combat:
-                lancerFragment(CombatFragment.class, true);
+                // lancerFragment(CombatFragment.class, true);
+                Intent intent = new Intent(this, CombatActivity.class);
+                startActivity(intent);
+
                 Toast.makeText(getApplicationContext(), "La bagarre !", Toast.LENGTH_SHORT).show();
                 return true;
 
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
