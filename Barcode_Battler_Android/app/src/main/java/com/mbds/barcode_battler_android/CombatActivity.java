@@ -62,7 +62,7 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
 
         try {
             msg = new NdefMessage( new NdefRecord[] {
-                    NdefRecord.createExternal("com.mbds.barcode_battler_android", "externalType", Serializable_Service.serialize(c))
+                    NdefRecord.createExternal("application/com.mbds.barcode_battler_android", "externalType", Serializable_Service.serialize(c))
             });
         } catch (IOException e) {
             System.err.println("ERREUR dans la serialisation de la créature : " + c);
