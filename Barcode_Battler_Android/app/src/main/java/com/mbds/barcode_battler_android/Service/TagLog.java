@@ -17,4 +17,5 @@ public class TagLog {
     public static final String BD = "BD GENERAL";
     public static final String SHOW_CREATURE = "SHOW_CREATURE";
     public static final String SHOW_EQUIPEMENT = "SHOW_EQUIPEMENT";
+    public static final String CHOOSE_CREATURE = "CHOOSE_CREATURE";
 }

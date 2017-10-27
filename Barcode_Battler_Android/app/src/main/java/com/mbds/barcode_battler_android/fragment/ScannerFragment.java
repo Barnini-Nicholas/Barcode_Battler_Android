@@ -60,8 +60,6 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
 
 
         mCallback.scanEffectue(barcode);
-
-
     }
 
 }

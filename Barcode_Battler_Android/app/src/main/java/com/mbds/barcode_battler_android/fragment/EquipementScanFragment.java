@@ -70,7 +70,7 @@ public class EquipementScanFragment extends Fragment {
             public void onClick(View v) {
                 Joueur.getInstance().addEquipement(equipement);
                 Toast.makeText(getContext(), "'" + equipement.getNom() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class);
+                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
             }
         });
 
@@ -79,7 +79,7 @@ public class EquipementScanFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Adieu '" + equipement.getNom() + "' !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class);
+                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
             }
         });
         return view;

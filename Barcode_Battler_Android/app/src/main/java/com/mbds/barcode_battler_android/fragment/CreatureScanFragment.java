@@ -79,7 +79,7 @@ public class CreatureScanFragment extends Fragment {
             public void onClick(View v) {
                 Joueur.getInstance().addCreature(creature);
                 Toast.makeText(getContext(), "'" + creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class);
+                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
             }
         });
 
@@ -87,7 +87,7 @@ public class CreatureScanFragment extends Fragment {
         btnJeterCreature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class);
+                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
                 Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
             }
         });

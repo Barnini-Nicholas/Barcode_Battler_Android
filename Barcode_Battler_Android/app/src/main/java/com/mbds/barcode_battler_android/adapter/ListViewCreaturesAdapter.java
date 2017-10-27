@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
+import com.mbds.barcode_battler_android.listener.ChoixCreatureListener;
 
 /**
  * Created by Karl on 26/10/2017.
@@ -23,9 +23,11 @@ import com.mbds.barcode_battler_android.R;
 public class ListViewCreaturesAdapter implements ListAdapter {
 
     private LayoutInflater mInflater;
+    private boolean isChoixCreature;
 
-    public ListViewCreaturesAdapter(Context creaturesFragment) {
+    public ListViewCreaturesAdapter(Context creaturesFragment, boolean isChoixCreature) {
         mInflater = LayoutInflater.from(creaturesFragment);
+        this.isChoixCreature = isChoixCreature;
     }
 
     @Override
@@ -68,12 +70,7 @@ public class ListViewCreaturesAdapter implements ListAdapter {
         imageRace.setImageResource(mInflater.getContext().getResources().getIdentifier(c.getRace().toLowerCase().replaceAll("é", "e"), "drawable",
                 MainActivity.getAppContext().getPackageName()));
 
-        returnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mInflater.getContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        returnView.setOnClickListener(new ChoixCreatureListener(c, isChoixCreature));
 
         return returnView;
     }
@@ -103,7 +100,6 @@ public class ListViewCreaturesAdapter implements ListAdapter {
 
     }
 
-
     @Override
     public long getItemId(int position) {
         return position;
@@ -113,7 +109,6 @@ public class ListViewCreaturesAdapter implements ListAdapter {
     public boolean hasStableIds() {
         return true;
     }
-
 
     @Override
     public int getItemViewType(int position) {

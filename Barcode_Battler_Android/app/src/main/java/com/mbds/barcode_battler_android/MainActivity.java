@@ -1,5 +1,6 @@
 package com.mbds.barcode_battler_android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.mbds.barcode_battler_android.Modele.TypeButin;
 import com.mbds.barcode_battler_android.Service.HashService;
 import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Service.TraitementHash;
+import com.mbds.barcode_battler_android.fragment.CombatFragment;
 import com.mbds.barcode_battler_android.fragment.CreatureScanFragment;
 import com.mbds.barcode_battler_android.fragment.CreaturesFragment;
 import com.mbds.barcode_battler_android.fragment.EquipementScanFragment;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
 
     private static Context context;
+    public static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         MainActivity.context = getApplicationContext();
-    }
+        MainActivity.activity = this;
+}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,19 +56,20 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_scanner:
-                lancerFragment(ScannerFragment.class);
+                lancerFragment(ScannerFragment.class, true);
                 return true;
 
             case R.id.action_ouvrir_creatures:
-                lancerFragment(CreaturesFragment.class);
+                lancerFragment(CreaturesFragment.class, true);
                 // lancerFragmentCreatures();
                 return true;
 
             case R.id.action_ouvrir_equipements:
-                lancerFragment(EquipementsFragment.class);
+                lancerFragment(EquipementsFragment.class, true);
                 return true;
 
             case R.id.action_lancer_combat:
+                lancerFragment(CombatFragment.class, true);
                 Toast.makeText(getApplicationContext(), "La bagarre !", Toast.LENGTH_SHORT).show();
                 return true;
 
@@ -76,10 +81,10 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         }
     }
 
-    public void lancerFragment(Class fragmentClass) {
+    public void lancerFragment(Class fragmentClass, boolean disallowAddToBackStack) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
-            lancerFragment(fragment);
+            lancerFragment(fragment, disallowAddToBackStack);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -87,13 +92,18 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         }
     }
 
-    public void lancerFragment(Fragment fragment) {
+    public void lancerFragment(Fragment fragment, boolean disallowAddToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.disallowAddToBackStack();
+
+        if (disallowAddToBackStack) {
+            transaction.disallowAddToBackStack();
+        } else {
+            transaction.addToBackStack(null);
+        }
 
         // Commit the transaction
         transaction.commit();
@@ -142,8 +152,7 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         CreatureScanFragment creatureScanFragment = new CreatureScanFragment();
         creatureScanFragment.setCreature(creature);
 
-
-        lancerFragment(creatureScanFragment);
+        lancerFragment(creatureScanFragment, true);
     }
 
     private void lancerFragmentEquipementScan(String hash) {
@@ -164,6 +173,6 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         EquipementScanFragment equipementScanFragment = new EquipementScanFragment();
         equipementScanFragment.setEquipement(equipement);
 
-        lancerFragment(equipementScanFragment);
+        lancerFragment(equipementScanFragment, true);
     }
 }

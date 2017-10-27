@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.R;
 import com.mbds.barcode_battler_android.adapter.ListViewCreaturesAdapter;
 
 public class CreaturesFragment extends Fragment {
+
+    private boolean isChoixCreature = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -19,9 +22,18 @@ public class CreaturesFragment extends Fragment {
         View view = inflater.inflate(R.layout.list_creatures, container, false);
 
         ListView lv = (ListView) view.findViewById(R.id.listViewCreature);
-        lv.setAdapter(new ListViewCreaturesAdapter(getContext()));
+        lv.setAdapter(new ListViewCreaturesAdapter(getContext(), isChoixCreature));
 
         return view;
     }
+
+    public boolean isChoixCreature() {
+        return isChoixCreature;
+    }
+
+    public void setChoixCreature(boolean choixCreature) {
+        isChoixCreature = choixCreature;
+    }
+
 
 }
