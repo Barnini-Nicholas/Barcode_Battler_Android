@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
@@ -22,7 +23,6 @@ import com.mbds.barcode_battler_android.R;
 public class EquipementScanFragment extends Fragment {
 
     private Equipement equipement;
-
 
     private TextView textNom;
     private LinearLayout layoutRarete;
@@ -40,8 +40,6 @@ public class EquipementScanFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.affichage_equipement, container, false);
 
-        Bundle args = getArguments();
-        equipement = args.getParcelable("equipement");
         Log.i("DEBUG", equipement.toString());
 
         textNom = (TextView) view.findViewById(R.id.nom_equipement);
@@ -72,7 +70,7 @@ public class EquipementScanFragment extends Fragment {
             public void onClick(View v) {
                 Joueur.getInstance().addEquipement(equipement);
                 Toast.makeText(getContext(), "'" + equipement.getNom() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-
+                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class);
             }
         });
 
@@ -81,9 +79,17 @@ public class EquipementScanFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Adieu '" + equipement.getNom() + "' !", Toast.LENGTH_SHORT).show();
-
+                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class);
             }
         });
         return view;
+    }
+
+    public Equipement getEquipement() {
+        return equipement;
+    }
+
+    public void setEquipement(Equipement equipement) {
+        this.equipement = equipement;
     }
 }

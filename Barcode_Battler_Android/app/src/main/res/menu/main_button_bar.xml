@@ -4,7 +4,7 @@
     <!-- Lancer un combat -->
     <item
         android:id="@+id/action_lancer_combat"
-        android:icon="@drawable/fight"
+        android:icon="@drawable/sword"
         android:title="Combat"
         app:showAsAction="always" />
 

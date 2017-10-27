@@ -1,6 +1,5 @@
 package com.mbds.barcode_battler_android.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -38,7 +37,6 @@ public class CreatureScanFragment extends Fragment {
     private Button btnJeterCreature;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,9 +44,6 @@ public class CreatureScanFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.affichage_creature, container, false);
 
-        Bundle args = getArguments();
-
-        creature = args.getParcelable("creature");
         Log.i("DEBUG", creature.toString());
 
         textNom = (TextView) view.findViewById(R.id.nom_creature);
@@ -84,7 +79,7 @@ public class CreatureScanFragment extends Fragment {
             public void onClick(View v) {
                 Joueur.getInstance().addCreature(creature);
                 Toast.makeText(getContext(), "'" + creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-
+                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class);
             }
         });
 
@@ -92,14 +87,19 @@ public class CreatureScanFragment extends Fragment {
         btnJeterCreature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class);
                 Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
-
             }
         });
 
         return view;
     }
 
+    public Creature getCreature() {
+        return creature;
+    }
 
-
+    public void setCreature(Creature creature) {
+        this.creature = creature;
+    }
 }

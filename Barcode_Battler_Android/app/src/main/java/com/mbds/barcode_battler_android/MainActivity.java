@@ -2,6 +2,7 @@ package com.mbds.barcode_battler_android;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,19 +52,16 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_scanner:
-                // Create a new Fragment to be placed in the activity layout
-                ScannerFragment scannerFragment = new ScannerFragment();
-                scannerFragment.setArguments(getIntent().getExtras());
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_container, scannerFragment).commit();
+                lancerFragment(ScannerFragment.class);
                 return true;
 
             case R.id.action_ouvrir_creatures:
-                lancerFragmentCreatures();
+                lancerFragment(CreaturesFragment.class);
+                // lancerFragmentCreatures();
                 return true;
 
             case R.id.action_ouvrir_equipements:
-                lancerFragmentEquipements();
+                lancerFragment(EquipementsFragment.class);
                 return true;
 
             case R.id.action_lancer_combat:
@@ -76,6 +74,29 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public void lancerFragment(Class fragmentClass) {
+        try {
+            Fragment fragment = (Fragment) fragmentClass.newInstance();
+            lancerFragment(fragment);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void lancerFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.disallowAddToBackStack();
+
+        // Commit the transaction
+        transaction.commit();
     }
 
 
@@ -103,32 +124,6 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         }
     }
 
-    private void lancerFragmentEquipements() {
-        EquipementsFragment equipementsFragment = new EquipementsFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, equipementsFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    private void lancerFragmentCreatures() {
-        CreaturesFragment creaturesFragment = new CreaturesFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, creaturesFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
     private void lancerFragmentCreatureScan(String hash) {
 
         // On récupère la créature générée
@@ -145,18 +140,10 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
         // Création du fragment qui affiche la créature
         CreatureScanFragment creatureScanFragment = new CreatureScanFragment();
+        creatureScanFragment.setCreature(creature);
 
-        Bundle args = new Bundle();
-        args.putParcelable("creature", creature);
-        creatureScanFragment.setArguments(args);
 
-        // Début de la transaction pour ajouter ce fragment et lui passer la Créature
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, creatureScanFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
+        lancerFragment(creatureScanFragment);
     }
 
     private void lancerFragmentEquipementScan(String hash) {
@@ -175,17 +162,8 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
         // Création du fragment
         EquipementScanFragment equipementScanFragment = new EquipementScanFragment();
+        equipementScanFragment.setEquipement(equipement);
 
-        Bundle args = new Bundle();
-        args.putParcelable("equipement", equipement);
-        equipementScanFragment.setArguments(args);
-
-        // Début de la transaction pour ajouter ce fragment et lui passer l'équipement
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, equipementScanFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
+        lancerFragment(equipementScanFragment);
     }
 }

@@ -9,6 +9,7 @@
         android:layout_width="67dp"
         android:layout_height="99dp"
         android:gravity="center"
+        android:padding="5dp"
         android:src="@drawable/equipement" />
 
     <LinearLayout
