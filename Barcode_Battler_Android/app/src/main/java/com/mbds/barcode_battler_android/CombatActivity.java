@@ -48,7 +48,7 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
 
         // com.mbds.barcode_battler_android
 
-        Creature c = new Creature("aNom", "aTitre", "aRace", 10, 10, 10, "aCode");
+        Creature c = new Creature("aNom", "aTitre", "Humain", 10, 10, 10, "aCode");
 
         NdefMessage msg = null;
         try {
@@ -61,6 +61,10 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        Log.v("NFC", "Creature : " + c);
+        Log.v("NFC", "msg : " + msg.getRecords());
 
 /*
         NdefMessage msg = null;
@@ -103,6 +107,8 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         // record 0 contains the MIME type, record 1 is the AAR, if present
         //textView.setText("J'AVAIS RAISON HEHE");
+
+        Log.v("NFC", "payload : " + msg.getRecords()[0].getPayload());
 
         Creature c = null;
         try {
