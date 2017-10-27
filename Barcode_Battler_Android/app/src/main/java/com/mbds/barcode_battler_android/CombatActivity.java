@@ -49,25 +49,30 @@ public class CombatActivity extends AppCompatActivity implements NfcAdapter.Crea
         // com.mbds.barcode_battler_android
 
         Creature c = new Creature("aNom", "aTitre", "aRace", 10, 10, 10, "aCode");
-        String text = ("");
-        /*NdefMessage msg = new NdefMessage(
-                new NdefRecord[] { NdefRecord.createMime(
-                        "application/vnd.com.example.android.beam", text.getBytes())
 
-                        //,NdefRecord.createApplicationRecord("com.example.android.beam")
-                });
-        */
+        NdefMessage msg = null;
+        try {
+            msg = new NdefMessage(
+                    new NdefRecord[] { NdefRecord.createMime(
+                            "application/vnd.com.example.android.beam", Serializable_Service.serialize(c))
 
+                            //,NdefRecord.createApplicationRecord("com.example.android.beam")
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+/*
         NdefMessage msg = null;
 
         try {
             msg = new NdefMessage( new NdefRecord[] {
-                    NdefRecord.createExternal("application/com.mbds.barcode_battler_android", "externalType", Serializable_Service.serialize(c))
+                    NdefRecord.createExternal("application/vnd.com.example.android.beam", "externalType", Serializable_Service.serialize(c))
             });
         } catch (IOException e) {
             System.err.println("ERREUR dans la serialisation de la créature : " + c);
             e.printStackTrace();
-        }
+        }*/
 
         return msg;
     }
