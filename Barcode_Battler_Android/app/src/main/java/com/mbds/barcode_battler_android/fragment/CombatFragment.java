@@ -41,6 +41,7 @@ public class CombatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(TagLog.CHOOSE_CREATURE, "Choix créature 1");
+
                 choix_creature = CHOIX_CREATURE.CREATURE_1;
 
                 CreaturesFragment creaturesFragment = new CreaturesFragment();

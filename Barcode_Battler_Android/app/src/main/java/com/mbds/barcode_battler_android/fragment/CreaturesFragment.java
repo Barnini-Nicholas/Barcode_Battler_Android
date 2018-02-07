@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.R;
@@ -23,6 +24,9 @@ public class CreaturesFragment extends Fragment {
 
         ListView lv = (ListView) view.findViewById(R.id.listViewCreature);
         lv.setAdapter(new ListViewCreaturesAdapter(getContext(), isChoixCreature));
+
+        TextView emptyText = (TextView)view.findViewById(android.R.id.empty);
+        lv.setEmptyView(emptyText);
 
         return view;
     }

@@ -32,6 +32,10 @@ public class ScannerFragment extends Fragment implements ZXingScannerView.Result
         // getActivity().setContentView(mScannerView);                // Set the scanner view as the content view
 
         mCallback = (OnScanEffectue) getActivity();
+
+        // TODO : ajouter pour Huawei P10
+        mScannerView.setAspectTolerance(0.5f);
+
         return mScannerView;
     }
 
