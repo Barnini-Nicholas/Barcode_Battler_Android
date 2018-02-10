@@ -8,6 +8,8 @@ import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.R;
 import com.mbds.barcode_battler_android.fragment.CombatFragment;
+import com.mbds.barcode_battler_android.fragment.CreatureScanFragment;
+import com.mbds.barcode_battler_android.fragment.CreaturesFragment;
 
 /**
  * Created by Karl on 27/10/2017.
@@ -17,10 +19,12 @@ public class ChoixCreatureListener implements View.OnClickListener {
 
     private Creature creature;
     private boolean isChoixCreature;
+    private MainActivity main;
 
-    public ChoixCreatureListener(Creature creature, boolean isChoixCreature) {
+    public ChoixCreatureListener(Creature creature, boolean isChoixCreature, MainActivity main) {
         this.creature = creature;
         this.isChoixCreature = isChoixCreature;
+        this.main = main;
     }
 
     @Override
@@ -42,6 +46,10 @@ public class ChoixCreatureListener implements View.OnClickListener {
             }
 
         } else {
+            CreatureScanFragment creaturesFragment = new CreatureScanFragment();
+            creaturesFragment.setCreature(creature);
+            creaturesFragment.setReadOnly(true);
+            ((MainActivity) main).lancerFragment(creaturesFragment, false);
             Toast.makeText(v.getContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
         }
     }

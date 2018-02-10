@@ -36,6 +36,8 @@ public class CreatureScanFragment extends Fragment {
     private Button btnAddCreature;
     private Button btnJeterCreature;
 
+    private boolean readOnly = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,24 +75,34 @@ public class CreatureScanFragment extends Fragment {
         textPB = (TextView) view.findViewById(R.id.pb_creature);
         textPB.setText(creature.getPB() + "");
 
-        btnAddCreature = (Button) view.findViewById(R.id.garder_creature);
-        btnAddCreature.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Joueur.getInstance().addCreature(creature);
-                Toast.makeText(getContext(), "'" + creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
-            }
-        });
 
+        btnAddCreature = (Button) view.findViewById(R.id.garder_creature);
         btnJeterCreature = (Button) view.findViewById(R.id.jeter_creature);
-        btnJeterCreature.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
-                Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        if (readOnly == false) {
+            btnAddCreature.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Joueur.getInstance().addCreature(creature);
+                    Toast.makeText(getContext(), "'" + creature.getNomEtTitre() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
+                    ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
+                }
+            });
+
+            btnJeterCreature.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) getActivity()).lancerFragment(CreaturesFragment.class, true);
+                    Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            btnAddCreature.setVisibility(View.INVISIBLE);
+            btnJeterCreature.setVisibility(View.INVISIBLE);
+
+            ((TextView) view.findViewById(R.id.textInfo)).setText("Votre créature : ");
+        }
+
 
         return view;
     }
@@ -101,5 +113,9 @@ public class CreatureScanFragment extends Fragment {
 
     public void setCreature(Creature creature) {
         this.creature = creature;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 }

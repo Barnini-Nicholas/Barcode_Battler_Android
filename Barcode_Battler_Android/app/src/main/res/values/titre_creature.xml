@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="titre_creature_array">
-        <item>le développeur web</item>
+        <item>l\'associé de Domo</item>
         <item>l\'oeil de taupe</item>
         <item>le bagarreur</item>
         <item>le malin</item>
@@ -12,7 +12,7 @@
         <item>le fier</item>
         <item>le fou</item>
         <item>l\'illuminé</item>
-        <item>le furieux</item>
+        <item>le développeur web</item>
         <item>le brave</item>
         <item>le pilote</item>
         <item>le footballeur</item>

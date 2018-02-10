@@ -23,7 +23,7 @@ public class CreaturesFragment extends Fragment {
         View view = inflater.inflate(R.layout.list_creatures, container, false);
 
         ListView lv = (ListView) view.findViewById(R.id.listViewCreature);
-        lv.setAdapter(new ListViewCreaturesAdapter(getContext(), isChoixCreature));
+        lv.setAdapter(new ListViewCreaturesAdapter(getContext(), isChoixCreature, (MainActivity) getActivity()));
 
         TextView emptyText = (TextView)view.findViewById(android.R.id.empty);
         lv.setEmptyView(emptyText);
