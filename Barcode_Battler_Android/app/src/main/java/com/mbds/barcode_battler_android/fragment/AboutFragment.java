@@ -34,6 +34,13 @@ public class AboutFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.karlLeDevWeb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "L'assistant de saramago ^^", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 }
