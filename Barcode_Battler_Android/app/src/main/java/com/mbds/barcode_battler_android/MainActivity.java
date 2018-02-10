@@ -20,6 +20,7 @@ import com.mbds.barcode_battler_android.Modele.TypeButin;
 import com.mbds.barcode_battler_android.Service.HashService;
 import com.mbds.barcode_battler_android.Service.TagLog;
 import com.mbds.barcode_battler_android.Service.TraitementHash;
+import com.mbds.barcode_battler_android.fragment.AboutFragment;
 import com.mbds.barcode_battler_android.fragment.CombatFragment;
 import com.mbds.barcode_battler_android.fragment.CreatureScanFragment;
 import com.mbds.barcode_battler_android.fragment.CreaturesFragment;
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.about:
+                lancerFragment(AboutFragment.class, true);
+                return true;
+
             case R.id.action_scanner:
                 lancerFragment(ScannerFragment.class, true);
                 return true;
