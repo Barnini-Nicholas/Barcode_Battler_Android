@@ -8,6 +8,7 @@
         android:id="@+id/image_race"
         android:layout_width="67dp"
         android:layout_height="99dp"
+        android:baselineAligned="false"
         android:gravity="center"
         android:src="@drawable/humain" />
 

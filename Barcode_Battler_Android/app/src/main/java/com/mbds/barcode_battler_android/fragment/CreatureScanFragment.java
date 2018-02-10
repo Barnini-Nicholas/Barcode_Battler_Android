@@ -79,7 +79,7 @@ public class CreatureScanFragment extends Fragment {
         btnAddCreature = (Button) view.findViewById(R.id.garder_creature);
         btnJeterCreature = (Button) view.findViewById(R.id.jeter_creature);
 
-        if (readOnly == false) {
+        if (!readOnly) {
             btnAddCreature.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

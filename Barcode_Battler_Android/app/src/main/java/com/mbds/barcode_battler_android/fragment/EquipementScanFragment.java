@@ -68,7 +68,7 @@ public class EquipementScanFragment extends Fragment {
         btnAddEquipement = (Button) view.findViewById(R.id.garder_equipement);
         btnJeterEquipement = (Button) view.findViewById(R.id.jeter_equipement);
 
-        if (readOnly = false) {
+        if (!readOnly) {
             btnAddEquipement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
