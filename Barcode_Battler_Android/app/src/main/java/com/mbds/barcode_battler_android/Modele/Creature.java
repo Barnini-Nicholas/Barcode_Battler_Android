@@ -3,6 +3,7 @@ package com.mbds.barcode_battler_android.Modele;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.mbds.barcode_battler_android.Service.TagLog;
 
@@ -68,7 +69,7 @@ public class Creature implements Parcelable, Serializable {
         listEquipement = new ArrayList<>();
     }
 
-    public void attaque(Creature c2) {
+    public void attaque(Creature c2, EditText logCombat) {
 
         Random rdm = new Random();
 
@@ -76,10 +77,14 @@ public class Creature implements Parcelable, Serializable {
         int scoreDefense = rdm.nextInt(c2.getPB() + 1);
         int resultat = scoreDefense - scoreAttaque;
         Log.v(TagLog.COMBAT, "scoreAttaque : " + scoreAttaque + " // scoreDefense : " + scoreDefense + " // Resultat : " + resultat);
+
         if (resultat < 0) {
             Log.v(TagLog.COMBAT, "PV au départ : " + c2.getPV());
+
             c2.setPV(c2.getPV() - Math.abs(resultat));
             Log.v(TagLog.COMBAT, "PV aprés l'attaque : " + c2.getPV());
+            logCombat.setText(logCombat.getText() + c2.getNom() + resultat + " PV ");
+
         }
 
     }

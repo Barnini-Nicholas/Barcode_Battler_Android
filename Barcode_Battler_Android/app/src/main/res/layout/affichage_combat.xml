@@ -146,7 +146,6 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:minLines="2"
-            android:maxLines="3"
             android:gravity="bottom"
             android:inputType="textMultiLine"
             android:padding="10dp"/>

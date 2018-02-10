@@ -131,7 +131,7 @@ public class CombatFragment extends Fragment {
 
         Log.i(TagLog.COMBAT, (randomNum == 0) ? "C1 commence" : "C2 commence");
 
-        int i = 1;
+        int tour = 1;
 
         EditText logCombat = ((EditText) getView().findViewById(R.id.logs_combat));
 
@@ -139,15 +139,18 @@ public class CombatFragment extends Fragment {
         // Tant qu'aucun est mort on attaque
         while (creature1.getPV() > 0 && creature2.getPV() > 0) {
 
-            Log.i(TagLog.COMBAT, "////////// TOUR " + i);
+            Log.i(TagLog.COMBAT, "////////// TOUR " + tour);
 
             // Si on a 0 c'est c1 qui commence
             if (randomNum == 0) {
 
                 Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                creature1.attaque(creature2);
+                logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature1.getNom()+" attaque : ");
+
+                creature1.attaque(creature2, logCombat);
+
+                // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
-                logCombat.setText(logCombat.getText()+"\nC1 ATTAQUE  ");
 
                 try {
                     TimeUnit.SECONDS.sleep(1);
@@ -158,10 +161,12 @@ public class CombatFragment extends Fragment {
                 // Si c2 n'est pas mort il attaque
                 if (creature2.getPV() > 0) {
                     Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                    creature2.attaque(creature1);
+                    logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature2.getNom()+" attaque : ");
 
+                    creature2.attaque(creature1, logCombat);
+
+                    // Maj PV
                     ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
-                    logCombat.setText(logCombat.getText()+"\nC2 ATTAQUE  ");
                     try {
                         TimeUnit.SECONDS.sleep(1);
 
@@ -172,9 +177,12 @@ public class CombatFragment extends Fragment {
 
             } else {    // Si on a 1 c'est c2 qui commence
                 Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                creature2.attaque(creature1);
+                logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature2.getNom()+" attaque : ");
+
+                creature2.attaque(creature1, logCombat);
+
+                // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
-                logCombat.setText(logCombat.getText()+"\nC2 ATTAQUE  ");
 
                 try {
                     TimeUnit.SECONDS.sleep(1);
@@ -186,10 +194,12 @@ public class CombatFragment extends Fragment {
                 // Si c1 n'est pas mort il attaque
                 if (creature1.getPV() > 0) {
                     Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                    creature1.attaque(creature2);
+                    logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature1.getNom()+" attaque : ");
 
+                    creature1.attaque(creature2, logCombat);
+
+                    // Maj PV
                     ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
-                    logCombat.setText(logCombat.getText()+"\nC1 ATTAQUE  ");
 
                     try {
 
@@ -199,11 +209,11 @@ public class CombatFragment extends Fragment {
                     }
                 }
             }
-            i++;
+            tour++;
         }
 
         Log.i(TagLog.COMBAT, "Le gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
-        logCombat.setText(logCombat.getText()+"\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
+        logCombat.setText(logCombat.getText()+"\n\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
 
         Joueur.getInstance().resetListCreatures();
 
