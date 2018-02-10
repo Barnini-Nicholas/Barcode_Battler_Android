@@ -156,12 +156,6 @@ public class CombatFragment extends Fragment {
                 // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
 
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
                 // Si c2 n'est pas mort il attaque
                 if (creature2.getPV() > 0) {
                     Log.i(TagLog.COMBAT, "C2 ATTAQUE");
@@ -171,12 +165,7 @@ public class CombatFragment extends Fragment {
 
                     // Maj PV
                     ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
 
             } else {    // Si on a 1 c'est c2 qui commence
@@ -187,13 +176,6 @@ public class CombatFragment extends Fragment {
 
                 // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
-
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
                 // Si c1 n'est pas mort il attaque
                 if (creature1.getPV() > 0) {
