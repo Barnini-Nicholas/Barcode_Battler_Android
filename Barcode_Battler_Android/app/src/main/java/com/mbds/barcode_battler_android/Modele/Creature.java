@@ -41,6 +41,17 @@ public class Creature implements Parcelable, Serializable {
 
     private ArrayList<Equipement> listEquipement;
 
+    public Creature(Creature creatACopier){
+        this.setNom(creatACopier.nom);
+        this.setTitre(creatACopier.titre);
+        this.setRace(creatACopier.race);
+        this.setPV(creatACopier.PV);
+        this.setPA(creatACopier.PA);
+        this.setPB(creatACopier.PB);
+        this.setListEquipement(creatACopier.getListEquipement());
+        this.setCodeBarreUtilise(creatACopier.codeBarreUtilise);
+    }
+
     public Creature(String nom, String titre, String race, int pv, int pa, int pb, String codeBarreUtilise) {
         this.setNom(nom);
         this.setTitre(titre);

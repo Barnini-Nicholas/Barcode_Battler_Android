@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
 import com.mbds.barcode_battler_android.Service.Combat_Log_Thread;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -73,6 +75,30 @@ public class CombatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (creature1 != null && creature2 != null) {
+
+                    Creature cUNavecEquip = new Creature(creature1);
+                    Creature cDEUXavecEquip = new Creature(creature2);
+
+                    /*
+                        ArrayList<Equipement> ae = new ArrayList<Equipement>( );
+                        ae. add(new Equipement("TEST", 20, 20, 20 , "koko"));
+                        cUNavecEquip.setListEquipement(ae);
+                    */
+                    
+                    for(Equipement e : cUNavecEquip.getListEquipement()){
+                        cUNavecEquip.setPV(cUNavecEquip.getPV() + e.getBonusPV());
+                        cUNavecEquip.setPA(cUNavecEquip.getPA() + e.getBonusPA());
+                        cUNavecEquip.setPB(cUNavecEquip.getPB() + e.getBonusPB());
+                    }
+
+                    for(Equipement e : cDEUXavecEquip.getListEquipement()){
+                        cDEUXavecEquip.setPV(cDEUXavecEquip.getPV() + e.getBonusPV());
+                        cDEUXavecEquip.setPA(cDEUXavecEquip.getPA() + e.getBonusPA());
+                        cDEUXavecEquip.setPB(cDEUXavecEquip.getPB() + e.getBonusPB());
+                    }
+
+                    setCreature1(cUNavecEquip);
+                    setCreature2(cDEUXavecEquip);
 
                     commencerLaBagarre();
                 }
