@@ -1,20 +1,23 @@
 package com.mbds.barcode_battler_android.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mbds.barcode_battler_android.Controleur.GestionCombat;
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
+import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
 import com.mbds.barcode_battler_android.Service.TagLog;
+
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Karl on 27/10/2017.
@@ -68,8 +71,8 @@ public class CombatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (creature1 != null && creature2 != null) {
-                    GestionCombat gestionCombat = new GestionCombat(creature1, creature2, getView());
-                    gestionCombat.commencerLaBagarre();
+
+                    commencerLaBagarre();
                 }
             }
         });
@@ -118,6 +121,93 @@ public class CombatFragment extends Fragment {
     }
 
     private void commencerLaBagarre() {
+        // Chiffre random entre 0 et 1 pour déterminer qui commence le combat
+        Random rn = new Random();
+        int randomNum = rn.nextInt(2);
+
+        Log.i(TagLog.COMBAT, "/////////////////////////");
+        Log.i(TagLog.COMBAT, "Début du combat !");
+
+
+        Log.i(TagLog.COMBAT, (randomNum == 0) ? "C1 commence" : "C2 commence");
+
+        int i = 1;
+
+        EditText logCombat = ((EditText) getView().findViewById(R.id.logs_combat));
+
+
+        // Tant qu'aucun est mort on attaque
+        while (creature1.getPV() > 0 && creature2.getPV() > 0) {
+
+            Log.i(TagLog.COMBAT, "////////// TOUR " + i);
+
+            // Si on a 0 c'est c1 qui commence
+            if (randomNum == 0) {
+
+                Log.i(TagLog.COMBAT, "C1 ATTAQUE");
+                creature1.attaque(creature2);
+                ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
+                logCombat.setText(logCombat.getText()+"\nC1 ATTAQUE  ");
+
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Si c2 n'est pas mort il attaque
+                if (creature2.getPV() > 0) {
+                    Log.i(TagLog.COMBAT, "C2 ATTAQUE");
+                    creature2.attaque(creature1);
+
+                    ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
+                    logCombat.setText(logCombat.getText()+"\nC2 ATTAQUE  ");
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } else {    // Si on a 1 c'est c2 qui commence
+                Log.i(TagLog.COMBAT, "C2 ATTAQUE");
+                creature2.attaque(creature1);
+                ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
+                logCombat.setText(logCombat.getText()+"\nC2 ATTAQUE  ");
+
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // Si c1 n'est pas mort il attaque
+                if (creature1.getPV() > 0) {
+                    Log.i(TagLog.COMBAT, "C1 ATTAQUE");
+                    creature1.attaque(creature2);
+
+                    ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
+                    logCombat.setText(logCombat.getText()+"\nC1 ATTAQUE  ");
+
+                    try {
+
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            i++;
+        }
+
+        Log.i(TagLog.COMBAT, "Le gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
+        logCombat.setText(logCombat.getText()+"\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
+
+        Joueur.getInstance().resetListCreatures();
+
+        // return (creature1.getPV() <= 0) ? creature2 : creature1;
     }
 
     public Creature getCreature1() {

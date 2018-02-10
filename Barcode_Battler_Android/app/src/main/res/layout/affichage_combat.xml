@@ -145,10 +145,11 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:minLines="2"
+            android:maxLines="3"
             android:gravity="bottom"
             android:inputType="textMultiLine"
-            android:padding="10dp"
-            android:text="Logs" />
+            android:padding="10dp"/>
 
     </LinearLayout>
 
