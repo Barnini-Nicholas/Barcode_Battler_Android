@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.mbds.barcode_battler_android.Service.Combat_Log_Thread;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
 import java.io.ByteArrayInputStream;
@@ -69,7 +70,7 @@ public class Creature implements Parcelable, Serializable {
         listEquipement = new ArrayList<>();
     }
 
-    public void attaque(Creature c2, EditText logCombat) {
+    public void attaque(Creature c2, Combat_Log_Thread clt) {
 
         Random rdm = new Random();
 
@@ -83,8 +84,10 @@ public class Creature implements Parcelable, Serializable {
 
             c2.setPV(c2.getPV() - Math.abs(resultat));
             Log.v(TagLog.COMBAT, "PV aprés l'attaque : " + c2.getPV());
-            logCombat.setText(logCombat.getText() + c2.getNom() + resultat + " PV ");
+            clt.addCombatMsg(c2.getNom() + resultat + " PV ");
 
+        } else {
+            clt.addCombatMsg(this.getNom() + " a raté son attaque. ");
         }
 
     }

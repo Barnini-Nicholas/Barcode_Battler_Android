@@ -14,6 +14,7 @@ import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
+import com.mbds.barcode_battler_android.Service.Combat_Log_Thread;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
 import java.util.Random;
@@ -66,6 +67,7 @@ public class CombatFragment extends Fragment {
                 ((MainActivity) getActivity()).lancerFragment(creaturesFragment, false);
             }
         });
+
 
         view.findViewById(R.id.image_combat).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +135,9 @@ public class CombatFragment extends Fragment {
 
         int tour = 1;
 
-        EditText logCombat = ((EditText) getView().findViewById(R.id.logs_combat));
+        Combat_Log_Thread clt = new Combat_Log_Thread(((EditText) getView().findViewById(R.id.logs_combat)));
+        clt.start();
+
 
 
         // Tant qu'aucun est mort on attaque
@@ -145,9 +149,9 @@ public class CombatFragment extends Fragment {
             if (randomNum == 0) {
 
                 Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature1.getNom()+" attaque : ");
+                clt.addCombatMsg("\n|"+tour+"| "+creature1.getNom()+" attaque : ");
 
-                creature1.attaque(creature2, logCombat);
+                creature1.attaque(creature2, clt);
 
                 // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
@@ -161,9 +165,9 @@ public class CombatFragment extends Fragment {
                 // Si c2 n'est pas mort il attaque
                 if (creature2.getPV() > 0) {
                     Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                    logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature2.getNom()+" attaque : ");
+                    clt.addCombatMsg("\n|"+tour+"| "+creature2.getNom()+" attaque : ");
 
-                    creature2.attaque(creature1, logCombat);
+                    creature2.attaque(creature1, clt);
 
                     // Maj PV
                     ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
@@ -177,9 +181,9 @@ public class CombatFragment extends Fragment {
 
             } else {    // Si on a 1 c'est c2 qui commence
                 Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature2.getNom()+" attaque : ");
+                clt.addCombatMsg("\n|"+tour+"| "+creature2.getNom()+" attaque : ");
 
-                creature2.attaque(creature1, logCombat);
+                creature2.attaque(creature1, clt);
 
                 // Maj PV
                 ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
@@ -194,26 +198,21 @@ public class CombatFragment extends Fragment {
                 // Si c1 n'est pas mort il attaque
                 if (creature1.getPV() > 0) {
                     Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                    logCombat.setText(logCombat.getText()+"\n|"+tour+"| "+creature1.getNom()+" attaque : ");
+                    clt.addCombatMsg("\n|"+tour+"| "+creature1.getNom()+" attaque : ");
 
-                    creature1.attaque(creature2, logCombat);
+                    creature1.attaque(creature2, clt);
 
                     // Maj PV
                     ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
 
-                    try {
 
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
             tour++;
         }
 
         Log.i(TagLog.COMBAT, "Le gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
-        logCombat.setText(logCombat.getText()+"\n\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
+        clt.addCombatMsg("\n\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
 
         Joueur.getInstance().resetListCreatures();
 
