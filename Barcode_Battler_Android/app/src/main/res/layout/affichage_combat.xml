@@ -46,9 +46,10 @@
 
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:gravity="center"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/pv" />
 
                 <TextView
@@ -56,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="15dp" />
@@ -66,8 +68,8 @@
 
         <ImageView
             android:id="@+id/image_combat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:src="@drawable/sword" />
 
@@ -107,8 +109,9 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:src="@drawable/pv" />
 
@@ -116,7 +119,9 @@
                     android:id="@+id/pv_creature_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_alignEnd="@+id/layout_creature_2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="27dp"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="15dp" />

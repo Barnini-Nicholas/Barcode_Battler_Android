@@ -22,14 +22,12 @@ import com.mbds.barcode_battler_android.listener.ChoixCreatureListener;
 
 public class ListViewCreaturesAdapter implements ListAdapter {
 
-    private MainActivity main;
     private LayoutInflater mInflater;
     private boolean isChoixCreature;
 
     public ListViewCreaturesAdapter(Context creaturesFragment, boolean isChoixCreature, MainActivity main) {
         mInflater = LayoutInflater.from(creaturesFragment);
         this.isChoixCreature = isChoixCreature;
-        this.main = main;
     }
 
     @Override
@@ -72,7 +70,7 @@ public class ListViewCreaturesAdapter implements ListAdapter {
         imageRace.setImageResource(mInflater.getContext().getResources().getIdentifier(c.getRace().toLowerCase().replaceAll("é", "e"), "drawable",
                 MainActivity.getAppContext().getPackageName()));
 
-        returnView.setOnClickListener(new ChoixCreatureListener(c, isChoixCreature, main));
+        returnView.setOnClickListener(new ChoixCreatureListener(c, isChoixCreature));
 
         return returnView;
     }

@@ -126,7 +126,7 @@ public class CombatFragment extends Fragment {
                     MainActivity.getAppContext().getPackageName()));
 
             TextView txNom = (TextView) getView().findViewById(R.id.nom_creature_1);
-            txNom.setText(creature1.getNomEtTitre());
+            txNom.setText(creature1.getNom());
 
             TextView txPV = (TextView) getView().findViewById(R.id.pv_creature_1);
             txPV.setText("" + creature1.getPV());
@@ -139,7 +139,7 @@ public class CombatFragment extends Fragment {
                     MainActivity.getAppContext().getPackageName()));
 
             TextView txNom = (TextView) getView().findViewById(R.id.nom_creature_2);
-            txNom.setText(creature2.getNomEtTitre());
+            txNom.setText(creature2.getNom());
 
             TextView txPV = (TextView) getView().findViewById(R.id.pv_creature_2);
             txPV.setText("" + creature2.getPV());

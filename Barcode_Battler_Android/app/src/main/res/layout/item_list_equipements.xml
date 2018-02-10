@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Nom"
+            android:layout_marginTop="5dp"
             android:textColor="#000000"
             android:textSize="20dp" />
 
@@ -31,6 +32,7 @@
             android:id="@+id/rarity"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"></LinearLayout>
 
@@ -38,7 +40,7 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -52,8 +54,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:gravity="center"
                     android:src="@drawable/pv" />
 
@@ -78,8 +80,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:gravity="center"
                     android:src="@drawable/pa" />
 
@@ -104,8 +106,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:gravity="center"
                     android:src="@drawable/pb" />
 

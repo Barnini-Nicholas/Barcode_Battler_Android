@@ -19,12 +19,10 @@ public class ChoixCreatureListener implements View.OnClickListener {
 
     private Creature creature;
     private boolean isChoixCreature;
-    private MainActivity main;
 
-    public ChoixCreatureListener(Creature creature, boolean isChoixCreature, MainActivity main) {
+    public ChoixCreatureListener(Creature creature, boolean isChoixCreature) {
         this.creature = creature;
         this.isChoixCreature = isChoixCreature;
-        this.main = main;
     }
 
     @Override
@@ -49,8 +47,7 @@ public class ChoixCreatureListener implements View.OnClickListener {
             CreatureScanFragment creaturesFragment = new CreatureScanFragment();
             creaturesFragment.setCreature(creature);
             creaturesFragment.setReadOnly(true);
-            ((MainActivity) main).lancerFragment(creaturesFragment, false);
-            Toast.makeText(v.getContext(), ((TextView) v.findViewById(R.id.textCreatureNom)).getText(), Toast.LENGTH_SHORT).show();
+            ((MainActivity) MainActivity.activity).lancerFragment(creaturesFragment, false);
         }
     }
 }

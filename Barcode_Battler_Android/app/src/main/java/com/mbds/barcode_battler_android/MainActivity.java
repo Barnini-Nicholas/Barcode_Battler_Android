@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
         MainActivity.context = getApplicationContext();
         MainActivity.activity = this;
-}
+
+        lancerFragment(AboutFragment.class, true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
                 // Intent intent = new Intent(this, CombatActivity.class);
                 // startActivity(intent);
 
-                Toast.makeText(getApplicationContext(), "La bagarre !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Cliquez sur les deux épées pour commencer le combat !", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

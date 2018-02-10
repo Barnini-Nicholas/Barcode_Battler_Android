@@ -98,7 +98,7 @@ public class Creature implements Parcelable, Serializable {
             clt.addCombatMsg(c2.getNom() + resultat + " PV ");
 
         } else {
-            clt.addCombatMsg(this.getNom() + " a raté son attaque. ");
+            clt.addCombatMsg("il rate son attaque. ");
         }
 
     }
