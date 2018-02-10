@@ -119,9 +119,8 @@
                     android:id="@+id/pv_creature_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/layout_creature_2"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="27dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="15dp" />
