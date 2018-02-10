@@ -68,7 +68,6 @@
             android:id="@+id/image_combat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_creature_1"
             android:layout_centerInParent="true"
             android:src="@drawable/sword" />
 
@@ -78,8 +77,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/image_combat"
+
             android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/nom_creature_2"
+                android:layout_width="67dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/image_creature_2"
+                android:layout_width="67dp"
+                android:layout_height="99dp"
+                android:layout_weight="1"
+                android:src="@drawable/select" />
+
 
             <!-- PV -->
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -105,22 +121,6 @@
                     android:textColor="#000000"
                     android:textSize="15dp" />
             </LinearLayout>
-
-
-            <ImageView
-                android:id="@+id/image_creature_2"
-                android:layout_width="67dp"
-                android:layout_height="99dp"
-                android:layout_weight="1"
-                android:src="@drawable/select" />
-
-            <TextView
-                android:id="@+id/nom_creature_2"
-                android:layout_width="67dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#000000"
-                android:textSize="15dp" />
 
         </LinearLayout>
 
