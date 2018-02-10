@@ -11,9 +11,12 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
+import com.mbds.barcode_battler_android.fragment.CreatureScanFragment;
+import com.mbds.barcode_battler_android.fragment.EquipementScanFragment;
 
 /**
  * Created by Karl on 26/10/2017.
@@ -22,6 +25,7 @@ import com.mbds.barcode_battler_android.R;
 public class ListViewEquipementsAdapter implements ListAdapter {
 
     private LayoutInflater mInflater;
+    private Equipement equipement;
 
     public ListViewEquipementsAdapter(Context equipementsFragment) {
         mInflater = LayoutInflater.from(equipementsFragment);
@@ -40,13 +44,13 @@ public class ListViewEquipementsAdapter implements ListAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View returnView = mInflater.inflate(R.layout.item_list_equipements, null);
-        Equipement e = Joueur.getInstance().getListEquipement().get(position);
+        equipement = Joueur.getInstance().getListEquipement().get(position);
 
         TextView txNom = (TextView) returnView.findViewById(R.id.nom_equipement);
-        txNom.setText(e.getNom());
+        txNom.setText(equipement.getNom());
 
         LinearLayout layoutRarete = (LinearLayout) returnView.findViewById(R.id.rarity);
-        for (int i = 0; i < e.getRarete(); i++) {
+        for (int i = 0; i < equipement.getRarete(); i++) {
 
             View to_add = mInflater.inflate(R.layout.rarety_star,
                     layoutRarete, false);
@@ -55,18 +59,21 @@ public class ListViewEquipementsAdapter implements ListAdapter {
         }
 
         TextView txPV = (TextView) returnView.findViewById(R.id.pv_equipement);
-        txPV.setText("" + e.getBonusPV());
+        txPV.setText("" + equipement.getBonusPV());
 
         TextView txPA = (TextView) returnView.findViewById(R.id.pa_equipement);
-        txPA.setText("" + e.getBonusPA());
+        txPA.setText("" + equipement.getBonusPA());
 
         TextView txPB = (TextView) returnView.findViewById(R.id.pb_equipement);
-        txPB.setText("" + e.getBonusPB());
+        txPB.setText("" + equipement.getBonusPB());
 
         returnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mInflater.getContext(), ((TextView) v.findViewById(R.id.nom_equipement)).getText(), Toast.LENGTH_SHORT).show();
+                EquipementScanFragment equipementFragment = new EquipementScanFragment();
+                equipementFragment.setEquipement(equipement);
+                equipementFragment.setReadOnly(true);
+                ((MainActivity) MainActivity.activity).lancerFragment(equipementFragment, false);
             }
         });
 

@@ -33,6 +33,8 @@ public class EquipementScanFragment extends Fragment {
     private Button btnAddEquipement;
     private Button btnJeterEquipement;
 
+    private boolean readOnly = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,25 +65,33 @@ public class EquipementScanFragment extends Fragment {
         textPB = (TextView) view.findViewById(R.id.pb_equipement);
         textPB.setText(equipement.getBonusPB() + "");
 
-
         btnAddEquipement = (Button) view.findViewById(R.id.garder_equipement);
-        btnAddEquipement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Joueur.getInstance().addEquipement(equipement);
-                Toast.makeText(getContext(), "'" + equipement.getNom() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
-            }
-        });
-
         btnJeterEquipement = (Button) view.findViewById(R.id.jeter_equipement);
-        btnJeterEquipement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Adieu '" + equipement.getNom() + "' !", Toast.LENGTH_SHORT).show();
-                ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
-            }
-        });
+
+        if (readOnly = false) {
+            btnAddEquipement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Joueur.getInstance().addEquipement(equipement);
+                    Toast.makeText(getContext(), "'" + equipement.getNom() + "' ajouté à la collection !", Toast.LENGTH_SHORT).show();
+                    ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
+                }
+            });
+
+            btnJeterEquipement.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Adieu '" + equipement.getNom() + "' !", Toast.LENGTH_SHORT).show();
+                    ((MainActivity) getActivity()).lancerFragment(EquipementsFragment.class, true);
+                }
+            });
+        } else {
+            btnAddEquipement.setVisibility(View.INVISIBLE);
+            btnJeterEquipement.setVisibility(View.INVISIBLE);
+
+            ((TextView) view.findViewById(R.id.textEquipement)).setText("Votre équipement : ");
+        }
+
         return view;
     }
 
@@ -91,5 +101,9 @@ public class EquipementScanFragment extends Fragment {
 
     public void setEquipement(Equipement equipement) {
         this.equipement = equipement;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 }
