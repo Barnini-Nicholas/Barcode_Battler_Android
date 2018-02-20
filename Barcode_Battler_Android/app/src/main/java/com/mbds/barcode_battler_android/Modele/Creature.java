@@ -3,16 +3,9 @@ package com.mbds.barcode_battler_android.Modele;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-import android.widget.EditText;
 
-import com.mbds.barcode_battler_android.Service.Combat_Log_Thread;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -41,7 +34,7 @@ public class Creature implements Parcelable, Serializable {
 
     private ArrayList<Equipement> listEquipement;
 
-    public Creature(Creature creatACopier){
+    public Creature(Creature creatACopier) {
         this.setNom(creatACopier.nom);
         this.setTitre(creatACopier.titre);
         this.setRace(creatACopier.race);
@@ -81,7 +74,7 @@ public class Creature implements Parcelable, Serializable {
         listEquipement = new ArrayList<>();
     }
 
-    public void attaque(Creature c2, Combat_Log_Thread clt) {
+    public String attaque(Creature c2) {
 
         Random rdm = new Random();
 
@@ -95,10 +88,10 @@ public class Creature implements Parcelable, Serializable {
 
             c2.setPV(c2.getPV() - Math.abs(resultat));
             Log.v(TagLog.COMBAT, "PV aprés l'attaque : " + c2.getPV());
-            clt.addCombatMsg(c2.getNom() + resultat + " PV ");
+            return "il attaque " + c2.getNom() + " (" + resultat + " PV)";
 
         } else {
-            clt.addCombatMsg("il rate son attaque. ");
+            return "il rate son attaque... ";
         }
 
     }

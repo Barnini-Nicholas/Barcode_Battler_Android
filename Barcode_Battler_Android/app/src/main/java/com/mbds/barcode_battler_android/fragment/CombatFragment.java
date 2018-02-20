@@ -15,12 +15,10 @@ import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Equipement;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
-import com.mbds.barcode_battler_android.Service.Combat_Log_Thread;
+import com.mbds.barcode_battler_android.Service.CombatChange;
 import com.mbds.barcode_battler_android.Service.TagLog;
 
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Karl on 27/10/2017.
@@ -84,14 +82,14 @@ public class CombatFragment extends Fragment {
                         ae. add(new Equipement("TEST", 20, 20, 20 , "koko"));
                         cUNavecEquip.setListEquipement(ae);
                     */
-                    
-                    for(Equipement e : cUNavecEquip.getListEquipement()){
+
+                    for (Equipement e : cUNavecEquip.getListEquipement()) {
                         cUNavecEquip.setPV(cUNavecEquip.getPV() + e.getBonusPV());
                         cUNavecEquip.setPA(cUNavecEquip.getPA() + e.getBonusPA());
                         cUNavecEquip.setPB(cUNavecEquip.getPB() + e.getBonusPB());
                     }
 
-                    for(Equipement e : cDEUXavecEquip.getListEquipement()){
+                    for (Equipement e : cDEUXavecEquip.getListEquipement()) {
                         cDEUXavecEquip.setPV(cDEUXavecEquip.getPV() + e.getBonusPV());
                         cDEUXavecEquip.setPA(cDEUXavecEquip.getPA() + e.getBonusPA());
                         cDEUXavecEquip.setPB(cDEUXavecEquip.getPB() + e.getBonusPB());
@@ -156,17 +154,31 @@ public class CombatFragment extends Fragment {
     }
 
     private void commencerLaBagarre() {
-        // Chiffre random entre 0 et 1 pour déterminer qui commence le combat
-        Random rn = new Random();
-        int randomNum = rn.nextInt(2);
-
-        int tour = 1;
-
+        // Elément qui vont se mettre à jour durant le combat
         EditText editText = (EditText) getView().findViewById(R.id.logs_combat);
         TextView pvCreature1 = ((TextView) getView().findViewById(R.id.pv_creature_1));
         TextView pvCreature2 = ((TextView) getView().findViewById(R.id.pv_creature_2));
 
-        Combat_Log_Thread clt = new Combat_Log_Thread(editText, pvCreature1, pvCreature2);
+        // Service qui va gérer les MAJ UI
+        CombatChange clt = new CombatChange(editText, pvCreature1, pvCreature2);
+
+        // Chiffre random entre 0 et 1 pour déterminer qui commence le combat
+        Random rn = new Random();
+        int randomNum = rn.nextInt(2);
+
+        // Annonce de la créature qui commence :
+        String creatureCommence = "";
+        if (randomNum == 0) {
+            creatureCommence = creature1.getNom() + " commence !";
+        } else {
+            creatureCommence = creature2.getNom() + " commence !";
+        }
+        clt.addCombatMsg(creatureCommence);
+
+        // Compteur de tour
+        int tour = 1;
+
+        String attaque = "";
 
         // Tant qu'aucun est mort on attaque
         while (creature1.getPV() > 0 && creature2.getPV() > 0) {
@@ -176,46 +188,42 @@ public class CombatFragment extends Fragment {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            Log.i(TagLog.COMBAT, "////////// TOUR " + tour);
+            clt.addCombatMsg("\n");
 
             // Si on a 0 c'est c1 qui commence
             if (randomNum == 0) {
 
                 Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                clt.addCombatMsg("\n|"+tour+"| "+creature1.getNom()+" attaque : ");
 
-                creature1.attaque(creature2, clt);
+                attaque = creature1.attaque(creature2);
+                clt.addCombatMsg("\n[" + tour + "] - " + creature1.getNom() + " : " + attaque);
 
                 // Maj PV
                 clt.changePvCreature(2, creature2.getPV());
 
                 // Si c2 n'est pas mort il attaque
                 if (creature2.getPV() > 0) {
-                    Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                    clt.addCombatMsg("\n|"+tour+"| "+creature2.getNom()+" attaque : ");
 
-                    creature2.attaque(creature1, clt);
+                    attaque = creature2.attaque(creature1);
+                    clt.addCombatMsg("\n[" + tour + "] - " + creature2.getNom() + " : " + attaque);
 
                     // Maj PV
                     clt.changePvCreature(1, creature1.getPV());
                 }
 
             } else {    // Si on a 1 c'est c2 qui commence
-                Log.i(TagLog.COMBAT, "C2 ATTAQUE");
-                clt.addCombatMsg("\n|"+tour+"| "+creature2.getNom()+" attaque : ");
 
-                creature2.attaque(creature1, clt);
+                attaque = creature2.attaque(creature1);
+                clt.addCombatMsg("\n[" + tour + "] - " + creature2.getNom() + " : " + attaque);
 
                 // Maj PV
                 clt.changePvCreature(1, creature1.getPV());
 
                 // Si c1 n'est pas mort il attaque
                 if (creature1.getPV() > 0) {
-                    Log.i(TagLog.COMBAT, "C1 ATTAQUE");
-                    clt.addCombatMsg("\n|"+tour+"| "+creature1.getNom()+" attaque : ");
 
-                    creature1.attaque(creature2, clt);
+                    attaque = creature1.attaque(creature2);
+                    clt.addCombatMsg("\n[" + tour + "] - " + creature1.getNom() + " : " + attaque);
 
                     // Maj PV
                     clt.changePvCreature(2, creature2.getPV());
@@ -224,8 +232,7 @@ public class CombatFragment extends Fragment {
             tour++;
         }
 
-        Log.i(TagLog.COMBAT, "Le gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
-        clt.addCombatMsg("\n\nLe gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()));
+        clt.addCombatMsg("\n\n  -->  Le gagnant est : " + ((creature1.getPV() <= 0) ? creature2.getNom() : creature1.getNom()) + "  <--");
 
         Joueur.getInstance().resetListCreatures();
 

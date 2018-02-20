@@ -11,23 +11,31 @@ import org.w3c.dom.Text;
  * Created by PGNem on 10/02/2018.
  */
 
-public class Combat_Log_Thread {
+public class CombatChange {
 
     public EditText textLogs;
     public TextView pvCreature1;
     public TextView pvCreature2;
 
-    public Combat_Log_Thread(EditText et, TextView textCreature1, TextView textCreature2) {
+    public CombatChange(EditText et, TextView textCreature1, TextView textCreature2) {
         textLogs = et;
         pvCreature1 = textCreature1;
         pvCreature2 = textCreature2;
-    }
 
+        MainActivity.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textLogs.setText("");
+            }
+        });
+    }
     public void addCombatMsg(final String msg) {
         MainActivity.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 textLogs.setText(textLogs.getText() + msg);
+                textLogs.setSelection(textLogs.getText().length());
+
             }
         });
     }
