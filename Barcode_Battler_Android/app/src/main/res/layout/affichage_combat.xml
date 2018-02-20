@@ -48,8 +48,8 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/pv" />
 
                 <TextView
@@ -66,30 +66,13 @@
 
         </LinearLayout>
 
-        <!-- Creature 1 -->
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/layout_lancercombat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/image_combat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:src="@drawable/sword" />
 
-            <ImageView
-                android:id="@+id/image_combat"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/sword" />
-
-            <ImageView
-                android:id="@+id/lancer_nfc"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/nfc" />
-
-        </LinearLayout>
         <!-- Creature 2 -->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/layout_creature_2"
@@ -166,10 +149,10 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:minLines="2"
             android:gravity="bottom"
             android:inputType="textMultiLine"
-            android:minLines="2"
-            android:padding="10dp" />
+            android:padding="10dp"/>
 
     </LinearLayout>
 
