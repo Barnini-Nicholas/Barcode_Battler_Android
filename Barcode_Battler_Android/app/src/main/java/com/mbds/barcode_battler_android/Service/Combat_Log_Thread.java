@@ -1,27 +1,51 @@
 package com.mbds.barcode_battler_android.Service;
 
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.mbds.barcode_battler_android.MainActivity;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by PGNem on 10/02/2018.
  */
 
-public class Combat_Log_Thread extends Thread{
+public class Combat_Log_Thread {
 
-    public EditText ezEditText;
+    public EditText textLogs;
+    public TextView pvCreature1;
+    public TextView pvCreature2;
 
-    public Combat_Log_Thread(EditText et){
-        this.setDaemon(true);
-        this.ezEditText = et;
+    public Combat_Log_Thread(EditText et, TextView textCreature1, TextView textCreature2) {
+        textLogs = et;
+        pvCreature1 = textCreature1;
+        pvCreature2 = textCreature2;
     }
 
-    @Override
-    public void run() {
-        System.out.println("Lancement daemon thread comabt log.");
+    public void addCombatMsg(final String msg) {
+        MainActivity.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textLogs.setText(textLogs.getText() + msg);
+            }
+        });
     }
 
-    public void addCombatMsg(String msg){
-        this.ezEditText.setText(this.ezEditText.getText() + msg);
+    public void changePvCreature(final int numCreature, final Integer pv) {
+        MainActivity.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Cas pour créature 1
+                if (numCreature == 1) {
+                    pvCreature1.setText(pv.toString());
+                }
+                // Cas pour créature 2
+                else {
+                    pvCreature2.setText(pv.toString());
+                }
+            }
+        });
 
     }
 

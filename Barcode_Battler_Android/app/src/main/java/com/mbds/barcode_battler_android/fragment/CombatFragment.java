@@ -100,7 +100,14 @@ public class CombatFragment extends Fragment {
                     setCreature1(cUNavecEquip);
                     setCreature2(cDEUXavecEquip);
 
-                    commencerLaBagarre();
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            commencerLaBagarre();
+
+                        }
+                    });
+                    t.start();
                 }
             }
         });
@@ -153,21 +160,22 @@ public class CombatFragment extends Fragment {
         Random rn = new Random();
         int randomNum = rn.nextInt(2);
 
-        Log.i(TagLog.COMBAT, "/////////////////////////");
-        Log.i(TagLog.COMBAT, "Début du combat !");
-
-
-        Log.i(TagLog.COMBAT, (randomNum == 0) ? "C1 commence" : "C2 commence");
-
         int tour = 1;
 
-        Combat_Log_Thread clt = new Combat_Log_Thread(((EditText) getView().findViewById(R.id.logs_combat)));
-        clt.start();
+        EditText editText = (EditText) getView().findViewById(R.id.logs_combat);
+        TextView pvCreature1 = ((TextView) getView().findViewById(R.id.pv_creature_1));
+        TextView pvCreature2 = ((TextView) getView().findViewById(R.id.pv_creature_2));
 
-
+        Combat_Log_Thread clt = new Combat_Log_Thread(editText, pvCreature1, pvCreature2);
 
         // Tant qu'aucun est mort on attaque
         while (creature1.getPV() > 0 && creature2.getPV() > 0) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             Log.i(TagLog.COMBAT, "////////// TOUR " + tour);
 
@@ -180,7 +188,7 @@ public class CombatFragment extends Fragment {
                 creature1.attaque(creature2, clt);
 
                 // Maj PV
-                ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
+                clt.changePvCreature(2, creature2.getPV());
 
                 // Si c2 n'est pas mort il attaque
                 if (creature2.getPV() > 0) {
@@ -190,8 +198,7 @@ public class CombatFragment extends Fragment {
                     creature2.attaque(creature1, clt);
 
                     // Maj PV
-                    ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
-
+                    clt.changePvCreature(1, creature1.getPV());
                 }
 
             } else {    // Si on a 1 c'est c2 qui commence
@@ -201,7 +208,7 @@ public class CombatFragment extends Fragment {
                 creature2.attaque(creature1, clt);
 
                 // Maj PV
-                ((TextView) getView().findViewById(R.id.pv_creature_1)).setText(creature1.getPV() + "");
+                clt.changePvCreature(1, creature1.getPV());
 
                 // Si c1 n'est pas mort il attaque
                 if (creature1.getPV() > 0) {
@@ -211,9 +218,7 @@ public class CombatFragment extends Fragment {
                     creature1.attaque(creature2, clt);
 
                     // Maj PV
-                    ((TextView) getView().findViewById(R.id.pv_creature_2)).setText(creature2.getPV() + "");
-
-
+                    clt.changePvCreature(2, creature2.getPV());
                 }
             }
             tour++;
