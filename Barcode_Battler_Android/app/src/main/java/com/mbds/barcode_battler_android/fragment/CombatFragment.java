@@ -3,12 +3,15 @@ package com.mbds.barcode_battler_android.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
@@ -133,7 +136,8 @@ public class CombatFragment extends Fragment {
             TextView txNom = (TextView) getView().findViewById(R.id.nom_creature_1);
             txNom.setText(creature1.getNom());
 
-            TextView txPV = (TextView) getView().findViewById(R.id.pv_creature_1);
+            TextSwitcher txPV = (TextSwitcher) getView().findViewById(R.id.pv_creature_1);
+            txPV.setFactory(mFactory);
             txPV.setText("" + creature1.getPV());
 
         }
@@ -146,7 +150,8 @@ public class CombatFragment extends Fragment {
             TextView txNom = (TextView) getView().findViewById(R.id.nom_creature_2);
             txNom.setText(creature2.getNom());
 
-            TextView txPV = (TextView) getView().findViewById(R.id.pv_creature_2);
+            TextSwitcher txPV = (TextSwitcher) getView().findViewById(R.id.pv_creature_2);
+            txPV.setFactory(mFactory);
             txPV.setText("" + creature2.getPV());
         }
 
@@ -156,8 +161,8 @@ public class CombatFragment extends Fragment {
     private void commencerLaBagarre() {
         // Elément qui vont se mettre à jour durant le combat
         EditText editText = (EditText) getView().findViewById(R.id.logs_combat);
-        TextView pvCreature1 = ((TextView) getView().findViewById(R.id.pv_creature_1));
-        TextView pvCreature2 = ((TextView) getView().findViewById(R.id.pv_creature_2));
+        TextSwitcher pvCreature1 = ((TextSwitcher) getView().findViewById(R.id.pv_creature_1));
+        TextSwitcher pvCreature2 = ((TextSwitcher) getView().findViewById(R.id.pv_creature_2));
 
         // Service qui va gérer les MAJ UI
         CombatChange clt = new CombatChange(editText, pvCreature1, pvCreature2);
@@ -183,11 +188,6 @@ public class CombatFragment extends Fragment {
         // Tant qu'aucun est mort on attaque
         while (creature1.getPV() > 0 && creature2.getPV() > 0) {
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             clt.addCombatMsg("\n");
 
             // Si on a 0 c'est c1 qui commence
@@ -196,7 +196,7 @@ public class CombatFragment extends Fragment {
                 Log.i(TagLog.COMBAT, "C1 ATTAQUE");
 
                 attaque = creature1.attaque(creature2);
-                clt.addCombatMsg("\n[" + tour + "] - " + creature1.getNom() + " : " + attaque);
+                clt.addCombatMsg("\n[ " + tour + " ] - " + creature1.getNom() + " : " + attaque);
 
                 // Maj PV
                 clt.changePvCreature(2, creature2.getPV());
@@ -205,7 +205,7 @@ public class CombatFragment extends Fragment {
                 if (creature2.getPV() > 0) {
 
                     attaque = creature2.attaque(creature1);
-                    clt.addCombatMsg("\n[" + tour + "] - " + creature2.getNom() + " : " + attaque);
+                    clt.addCombatMsg("\n[ " + tour + " ] - " + creature2.getNom() + " : " + attaque);
 
                     // Maj PV
                     clt.changePvCreature(1, creature1.getPV());
@@ -214,7 +214,7 @@ public class CombatFragment extends Fragment {
             } else {    // Si on a 1 c'est c2 qui commence
 
                 attaque = creature2.attaque(creature1);
-                clt.addCombatMsg("\n[" + tour + "] - " + creature2.getNom() + " : " + attaque);
+                clt.addCombatMsg("\n[ " + tour + " ] - " + creature2.getNom() + " : " + attaque);
 
                 // Maj PV
                 clt.changePvCreature(1, creature1.getPV());
@@ -223,7 +223,7 @@ public class CombatFragment extends Fragment {
                 if (creature1.getPV() > 0) {
 
                     attaque = creature1.attaque(creature2);
-                    clt.addCombatMsg("\n[" + tour + "] - " + creature1.getNom() + " : " + attaque);
+                    clt.addCombatMsg("\n[ " + tour + " ] - " + creature1.getNom() + " : " + attaque);
 
                     // Maj PV
                     clt.changePvCreature(2, creature2.getPV());
@@ -257,5 +257,20 @@ public class CombatFragment extends Fragment {
     public static void setCreature2(Creature creature2) {
         CombatFragment.creature2 = creature2;
     }
+    /**
+     * The {@link android.widget.ViewSwitcher.ViewFactory} used to create {@link android.widget.TextView}s that the
+     * {@link android.widget.TextSwitcher} will switch between.
+     */
+    private ViewSwitcher.ViewFactory mFactory = new ViewSwitcher.ViewFactory() {
 
+        @Override
+        public View makeView() {
+
+            // Create a new TextView
+            TextView t = new TextView(MainActivity.activity);
+            t.setGravity(Gravity.CENTER);
+            t.setTextAppearance(MainActivity.activity, android.R.style.TextAppearance_Large);
+            return t;
+        }
+    };
 }

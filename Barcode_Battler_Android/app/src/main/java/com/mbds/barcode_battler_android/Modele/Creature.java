@@ -91,7 +91,7 @@ public class Creature implements Parcelable, Serializable {
             return "il attaque " + c2.getNom() + " (" + resultat + " PV)";
 
         } else {
-            return "il rate son attaque... ";
+            return "il rate son attaque...";
         }
 
     }

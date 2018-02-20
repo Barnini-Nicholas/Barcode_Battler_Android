@@ -52,12 +52,11 @@
                     android:layout_marginTop="5dp"
                     android:src="@drawable/pv" />
 
-                <TextView
+                <TextSwitcher
                     android:id="@+id/pv_creature_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="15dp" />
@@ -115,19 +114,17 @@
                     android:gravity="center"
                     android:src="@drawable/pv" />
 
-                <TextView
+                <TextSwitcher
                     android:id="@+id/pv_creature_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:textColor="#000000"
                     android:textSize="15dp" />
             </LinearLayout>
 
         </LinearLayout>
-
 
     </RelativeLayout>
 
