@@ -1,5 +1,6 @@
 package com.mbds.barcode_battler_android.Service;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,6 +18,7 @@ import org.w3c.dom.Text;
 
 public class CombatChange {
 
+    public static final String COLOR_RED = "<font color='#EE0000'>";
     public EditText textLogs;
     public TextSwitcher pvCreature1;
     public TextSwitcher pvCreature2;
@@ -64,10 +66,11 @@ public class CombatChange {
                 if (numCreature == 1) {
 
                     TextView textView = (TextView) pvCreature1.getCurrentView();
-                    
+
                     // Check si y'a eu des dégats
                     if (!textView.getText().equals(pv.toString())) {
-                        pvCreature1.setText(pv.toString());
+                        String pvColor = COLOR_RED + pv.toString() + "</font>";
+                        pvCreature1.setText(Html.fromHtml(pvColor));
                     }
                 }
                 // Cas pour créature 2
@@ -77,7 +80,8 @@ public class CombatChange {
 
                     // Check si y'a eu des dégats
                     if (!textView.getText().equals(pv.toString())) {
-                        pvCreature2.setText(pv.toString());
+                        String pvColor = COLOR_RED + pv.toString() + "</font>";
+                        pvCreature2.setText(Html.fromHtml(pvColor));
                     }
                 }
             }
