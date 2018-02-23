@@ -1,11 +1,15 @@
 package com.mbds.barcode_battler_android;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,6 +42,28 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // On récupére les permissions nécessaires de l'appli
+        int droitCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        int droitWriteExtStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        // Suivant les autorisations déja acquises on demande les autres
+        if(droitCamera != PackageManager.PERMISSION_GRANTED && droitWriteExtStorage != PackageManager.PERMISSION_GRANTED ){
+            Log.i("PERMISSION : ", "CAMERA & WRITE_EXTERNAL_STORAGE REFUSER");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    0);
+        } else if (droitCamera != PackageManager.PERMISSION_GRANTED){
+            Log.i("PERMISSION : ", "CAMERA REFUSER");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    0);
+        } else if (droitWriteExtStorage != PackageManager.PERMISSION_GRANTED){
+            Log.i("PERMISSION : ", "WRITE_EXTERNAL_STORAGE REFUSER");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    0);
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);

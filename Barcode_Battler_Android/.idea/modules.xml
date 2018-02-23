@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Barcode_Battler_Android.iml" filepath="$PROJECT_DIR$/Barcode_Battler_Android.iml" />
+      <module fileurl="file://D:\TRAVAIL\MBDS\clone_android\Barcode_Battler_Android\Barcode_Battler_Android\Barcode_Battler_Android.iml" filepath="D:\TRAVAIL\MBDS\clone_android\Barcode_Battler_Android\Barcode_Battler_Android\Barcode_Battler_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\TRAVAIL\MBDS\clone_android\Barcode_Battler_Android\Barcode_Battler_Android\app\app.iml" filepath="D:\TRAVAIL\MBDS\clone_android\Barcode_Battler_Android\Barcode_Battler_Android\app\app.iml" />
     </modules>
   </component>
 </project>
