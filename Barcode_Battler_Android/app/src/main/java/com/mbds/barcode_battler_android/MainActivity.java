@@ -54,22 +54,24 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         // On récupére les permissions nécessaires de l'appli
         int droitCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int droitWriteExtStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int droitNfc = ContextCompat.checkSelfPermission(this, Manifest.permission.NFC);
 
-        // Suivant les autorisations déja acquises on demande les autres
-        if (droitCamera != PackageManager.PERMISSION_GRANTED && droitWriteExtStorage != PackageManager.PERMISSION_GRANTED) {
-            Log.i("PERMISSION : ", "CAMERA & WRITE_EXTERNAL_STORAGE REFUSER");
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    0);
-        } else if (droitCamera != PackageManager.PERMISSION_GRANTED) {
+        if (droitCamera != PackageManager.PERMISSION_GRANTED) {
             Log.i("PERMISSION : ", "CAMERA REFUSER");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA},
                     0);
-        } else if (droitWriteExtStorage != PackageManager.PERMISSION_GRANTED) {
+        }
+        if (droitWriteExtStorage != PackageManager.PERMISSION_GRANTED) {
             Log.i("PERMISSION : ", "WRITE_EXTERNAL_STORAGE REFUSER");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    0);
+        }
+        if (droitNfc != PackageManager.PERMISSION_GRANTED) {
+            Log.i("PERMISSION : ", "NFC REFUSER");
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.NFC},
                     0);
         }
 
@@ -261,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
                 // Appel du scan des créatures
                 scanEffectue(tagInfo);
-                
+
                 Log.i("eee", tagInfo);
             }
         } else {
