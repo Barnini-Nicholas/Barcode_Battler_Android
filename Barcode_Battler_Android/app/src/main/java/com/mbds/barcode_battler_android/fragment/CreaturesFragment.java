@@ -5,12 +5,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.R;
 import com.mbds.barcode_battler_android.adapter.ListViewCreaturesAdapter;
+import com.mbds.barcode_battler_android.adapter.ListViewEquipementsAdapter;
 
 public class CreaturesFragment extends Fragment {
 

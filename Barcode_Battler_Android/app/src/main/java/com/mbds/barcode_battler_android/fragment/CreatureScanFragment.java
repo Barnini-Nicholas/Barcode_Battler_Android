@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.mbds.barcode_battler_android.MainActivity;
 import com.mbds.barcode_battler_android.Modele.Creature;
 import com.mbds.barcode_battler_android.Modele.Joueur;
 import com.mbds.barcode_battler_android.R;
+import com.mbds.barcode_battler_android.adapter.ListViewEquipementsAdapter;
 
 /**
  * Created by Karl on 25/10/2017.
@@ -96,6 +98,12 @@ public class CreatureScanFragment extends Fragment {
                     Toast.makeText(getContext(), "Adieu '" + creature.getNomEtTitre() + "' !", Toast.LENGTH_SHORT).show();
                 }
             });
+
+
+            // Equipements
+            ListView equipements = (ListView) view.findViewById(R.id.listEquipementsCreature);
+            equipements.setAdapter(new ListViewEquipementsAdapter(getContext()));
+
         } else {
             btnAddCreature.setVisibility(View.INVISIBLE);
             btnJeterCreature.setVisibility(View.INVISIBLE);

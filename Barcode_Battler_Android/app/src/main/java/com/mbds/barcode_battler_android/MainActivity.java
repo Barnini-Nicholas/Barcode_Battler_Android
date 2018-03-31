@@ -2,10 +2,16 @@ package com.mbds.barcode_battler_android;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
     private static Context context;
     public static Activity activity;
+    public static final String TAG = "NfcDemo";
+    private NfcAdapter nfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +56,29 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         int droitWriteExtStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         // Suivant les autorisations déja acquises on demande les autres
-        if(droitCamera != PackageManager.PERMISSION_GRANTED && droitWriteExtStorage != PackageManager.PERMISSION_GRANTED ){
+        if (droitCamera != PackageManager.PERMISSION_GRANTED && droitWriteExtStorage != PackageManager.PERMISSION_GRANTED) {
             Log.i("PERMISSION : ", "CAMERA & WRITE_EXTERNAL_STORAGE REFUSER");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     0);
-        } else if (droitCamera != PackageManager.PERMISSION_GRANTED){
+        } else if (droitCamera != PackageManager.PERMISSION_GRANTED) {
             Log.i("PERMISSION : ", "CAMERA REFUSER");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA},
                     0);
-        } else if (droitWriteExtStorage != PackageManager.PERMISSION_GRANTED){
+        } else if (droitWriteExtStorage != PackageManager.PERMISSION_GRANTED) {
             Log.i("PERMISSION : ", "WRITE_EXTERNAL_STORAGE REFUSER");
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     0);
+        }
+
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter == null) {
+            Toast.makeText(this,
+                    "NFC NOT supported on this devices!",
+                    Toast.LENGTH_LONG).show();
+            finish();
         }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -74,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
 
         lancerFragment(AboutFragment.class, true);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,5 +226,49 @@ public class MainActivity extends AppCompatActivity implements ScannerFragment.O
         equipementScanFragment.setEquipement(equipement);
 
         lancerFragment(equipementScanFragment, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+            Toast.makeText(this,
+                    "onResume() - ACTION_TAG_DISCOVERED",
+                    Toast.LENGTH_SHORT).show();
+
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            if (tag != null) {
+                String tagInfo = tag.toString() + "\n";
+
+                tagInfo += "\nTag Id: \n";
+                byte[] tagId = tag.getId();
+                tagInfo += "length = " + tagId.length + "\n";
+                for (int i = 0; i < tagId.length; i++) {
+                    tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
+                }
+                tagInfo += "\n";
+
+                String[] techList = tag.getTechList();
+                tagInfo += "\nTech List\n";
+                tagInfo += "length = " + techList.length + "\n";
+                for (int i = 0; i < techList.length; i++) {
+                    tagInfo += techList[i] + "\n ";
+                }
+
+                // Appel du scan des créatures
+                scanEffectue(tagInfo);
+                
+                Log.i("eee", tagInfo);
+            }
+        } else {
+            Toast.makeText(this,
+                    "onResume() : " + action,
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
